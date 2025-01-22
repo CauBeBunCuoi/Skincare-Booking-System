@@ -1,0 +1,48 @@
+.header-container{
+    display: flex;
+    font-size: large;
+    justify-content: space-between;
+}
+
+.header-logo{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.header-list{
+    display: flex;
+    padding: 0;
+    list-style-type: none;
+
+}
+
+.header-list-content{
+    margin: 0 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    /* border: 1px solid black; */
+    transition: 0.1s;   
+}
+
+.header-list-content:hover{
+    /* border: 1px solid white; */
+    background-color: rgb(39, 139, 226);
+    color: white;
+}
+
+.user-login{
+    display: flex;
+    align-items: center;
+}
+
+.user-profile-icon{
+    cursor: pointer;
+    transition: 0.1s;
+}
+
+.user-profile-icon:hover{
+    height: 30px;
+    width: 30px;
+}
