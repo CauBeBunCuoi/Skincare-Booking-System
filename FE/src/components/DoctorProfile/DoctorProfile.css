@@ -1,0 +1,80 @@
+.doctor-card {
+    background-color: white;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: flex-start;
+    margin-top: 5px;
+  }
+  
+  .doctor-image {
+    width: 33%;
+  }
+  
+  .doctor-image img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 12px;
+  }
+  
+  .doctor-info {
+    width: 67%;
+    padding-left: 24px;
+  }
+  
+  .doctor-name {
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .verified-icon {
+    color: #2563eb;
+  }
+  
+  .doctor-specialty {
+    color: #4b5563;
+    font-size: 16px;
+    margin-top: 4px;
+  }
+  
+  .experience {
+    background-color: #e5e7eb;
+    color: #4b5563;
+    font-size: 14px;
+    padding: 4px 8px;
+    border-radius: 16px;
+    margin-left: 8px;
+  }
+  
+  .doctor-about {
+    margin-top: 16px;
+  }
+  
+  .doctor-about h2 {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  
+  .doctor-about p {
+    color: #4b5563;
+    margin-top: 8px;
+  }
+  
+  .doctor-fee {
+    margin-top: 16px;
+  }
+  
+  .doctor-fee p {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  
+  .doctor-fee span {
+    color: #4b5563;
+  }
+  
