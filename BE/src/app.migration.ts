@@ -21,6 +21,7 @@ import { QuizQuestion, QuizQuestionModel, QuizQuestionSchema } from './database/
 import { QuizOption, QuizOptionModel, QuizOptionSchema } from './database/schemas/quizOption/quizOption.schema';
 import { QuizOptionService, QuizOptionServiceModel, QuizOptionServiceSchema } from './database/schemas/quizOptionService/quizOptionService.schema';
 import { Feedback, FeedbackModel, FeedbackSchema } from './database/schemas/feedback/feedback.schema';
+import { ServiceStep, ServiceStepModel, ServiceStepSchema } from './database/schemas/serviceStep/serviceStep.schema';
 
 
 type migrateSchemaType = [
@@ -39,6 +40,7 @@ export class AppMigration implements OnApplicationBootstrap {
     @InjectModel(TherapistBackground.name) private readonly therapistBackgroundModel: TherapistBackgroundModel,
     @InjectModel(Service.name) private readonly serviceModel: ServiceModel,
     @InjectModel(ServiceType.name) private readonly serviceTypeModel: ServiceTypeModel,   
+    @InjectModel(ServiceStep.name) private readonly serviceStepModel: ServiceStepModel,
     @InjectModel(SkinType.name) private readonly skinTypeModel: SkinTypeModel,
     @InjectModel(SkinStatus.name) private readonly skinStatusModel: SkinStatusModel,
     @InjectModel(ServiceSkinType.name) private readonly serviceSkinTypeModel: ServiceSkinTypeModel,
@@ -64,6 +66,7 @@ export class AppMigration implements OnApplicationBootstrap {
       [this.therapistBackgroundModel, TherapistBackgroundSchema.obj],
       [this.serviceModel, ServiceSchema.obj],
       [this.serviceTypeModel, ServiceTypeSchema.obj],
+      [this.serviceStepModel, ServiceStepSchema.obj],
       [this.skinTypeModel, SkinTypeSchema.obj],
       [this.skinStatusModel, SkinStatusSchema.obj],
       [this.serviceSkinTypeModel, ServiceSkinTypeSchema.obj],
