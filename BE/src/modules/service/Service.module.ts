@@ -17,12 +17,15 @@ import { ServiceSkinTypeRepository } from 'src/database/schemas/serviceSkinType/
 import { ServiceSkinStatusRepository } from 'src/database/schemas/serviceSkinStatus/serviceSkinStatus.repository';
 import { SkinTypeRepository } from 'src/database/schemas/skinType/skinType.repository';
 import { SkinStatusRepository } from 'src/database/schemas/skinStatus/skinStatus.repository';
+import { ServiceStep, ServiceStepSchema } from 'src/database/schemas/serviceStep/serviceStep.schema';
+import { ServiceStepRepository } from 'src/database/schemas/serviceStep/serviceStep.repository';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: Service.name, schema: ServiceSchema },                        // services
-      { name: ServiceType.name, schema: ServiceTypeSchema },                // serviceTypes               
+      { name: ServiceType.name, schema: ServiceTypeSchema },                // serviceTypes  
+      { name: ServiceStep.name, schema: ServiceStepSchema },                // serviceSteps                        
       { name: TherapistService.name, schema: TherapistServiceSchema },      // therapistServices
       { name: ServiceSkinType.name, schema: ServiceSkinTypeSchema },        // serviceSkinTypes
       { name: ServiceSkinStatus.name, schema: ServiceSkinStatusSchema },    // serviceSkinStatuses
@@ -35,6 +38,7 @@ import { SkinStatusRepository } from 'src/database/schemas/skinStatus/skinStatus
     // Repositories
     ServiceRepository,
     ServiceTypeRepository,
+    ServiceStepRepository,
     TherapistServiceRepository,
     ServiceSkinTypeRepository,
     ServiceSkinStatusRepository,

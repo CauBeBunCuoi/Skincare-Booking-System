@@ -11,6 +11,7 @@ import { Role, RoleSchema } from "./schemas/role/role.schema";
 import { Service, ServiceSchema } from "./schemas/service/service.schema";
 import { ServiceSkinStatus, ServiceSkinStatusSchema } from "./schemas/serviceSkinStatus/serviceSkinStatus.schema";
 import { ServiceSkinType, ServiceSkinTypeSchema } from "./schemas/serviceSkinType/serviceSkinType.schema";
+import { ServiceStep, ServiceStepSchema } from "./schemas/serviceStep/serviceStep.schema";
 import { ServiceType, ServiceTypeSchema } from "./schemas/serviceType/serviceType.schema";
 import { SkinStatus, SkinStatusSchema } from "./schemas/skinStatus/skinStatus.schema";
 import { SkinType, SkinTypeSchema } from "./schemas/skinType/skinType.schema";
@@ -27,7 +28,8 @@ export const databaseFeatures = [
   { name: WorkShift.name, schema: WorkShiftSchema },                    // workShifts
 
   { name: Service.name, schema: ServiceSchema },                        // services
-  { name: ServiceType.name, schema: ServiceTypeSchema },                // serviceTypes               
+  { name: ServiceType.name, schema: ServiceTypeSchema },                // serviceTypes  
+  { name: ServiceStep.name, schema: ServiceStepSchema },                // serviceSteps           
   { name: TherapistService.name, schema: TherapistServiceSchema },      // therapistServices
   { name: ServiceSkinType.name, schema: ServiceSkinTypeSchema },        // serviceSkinTypes
   { name: ServiceSkinStatus.name, schema: ServiceSkinStatusSchema },    // serviceSkinStatuses
