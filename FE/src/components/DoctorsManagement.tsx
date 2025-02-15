@@ -20,7 +20,7 @@ import {
   TextField,
   DialogActions,
 } from "@mui/material";
-import { Edit, Delete } from "@mui/icons-material";
+import { Edit, Delete, Add } from "@mui/icons-material";
 
 interface Doctor {
   id: number;
@@ -57,7 +57,11 @@ const DoctorsManagement: React.FC = () => {
   const handleOpenDialog = (doctor?: Doctor) => {
     if (doctor) {
       setEditingDoctor(doctor);
-      setForm({ name: doctor.name, department: doctor.department, fees: doctor.fees });
+      setForm({
+        name: doctor.name,
+        department: doctor.department,
+        fees: doctor.fees,
+      });
     } else {
       setEditingDoctor(null);
       setForm({ name: "", department: "", fees: "" });
@@ -79,7 +83,9 @@ const DoctorsManagement: React.FC = () => {
   const handleSaveDoctor = () => {
     if (editingDoctor) {
       setDoctors((prev) =>
-        prev.map((doc) => (doc.id === editingDoctor.id ? { ...doc, ...form } : doc))
+        prev.map((doc) =>
+          doc.id === editingDoctor.id ? { ...doc, ...form } : doc
+        )
       );
     } else {
       const newDoctor: Doctor = {
@@ -106,9 +112,6 @@ const DoctorsManagement: React.FC = () => {
           <Typography variant="h6" fontWeight="bold">
             Doctor Management
           </Typography>
-          <Button variant="contained" onClick={() => handleOpenDialog()}>
-            Add Doctor
-          </Button>
         </Box>
 
         <TableContainer component={Paper} sx={{ boxShadow: "none", mt: 2 }}>
@@ -119,7 +122,11 @@ const DoctorsManagement: React.FC = () => {
                 <TableCell sx={{ fontWeight: "bold" }}>Doctor</TableCell>
                 <TableCell sx={{ fontWeight: "bold" }}>Department</TableCell>
                 <TableCell sx={{ fontWeight: "bold" }}>Fees</TableCell>
-                <TableCell sx={{ fontWeight: "bold" }}>Actions</TableCell>
+                <TableCell sx={{ fontWeight: "bold" }} align="right">
+                  <IconButton color="primary" onClick={handleOpenDialog}>
+                    <Add />
+                  </IconButton>
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -134,11 +141,17 @@ const DoctorsManagement: React.FC = () => {
                   </TableCell>
                   <TableCell>{doctor.department}</TableCell>
                   <TableCell>{doctor.fees}</TableCell>
-                  <TableCell>
-                    <IconButton color="primary" onClick={() => handleOpenDialog(doctor)}>
+                  <TableCell align="right">
+                    <IconButton
+                      color="primary"
+                      onClick={() => handleOpenDialog(doctor)}
+                    >
                       <Edit />
                     </IconButton>
-                    <IconButton color="error" onClick={() => handleDeleteDoctor(doctor.id)}>
+                    <IconButton
+                      color="error"
+                      onClick={() => handleDeleteDoctor(doctor.id)}
+                    >
                       <Delete />
                     </IconButton>
                   </TableCell>
@@ -151,7 +164,9 @@ const DoctorsManagement: React.FC = () => {
 
       {/* Add/Edit Doctor Dialog */}
       <Dialog open={openDialog} onClose={handleCloseDialog}>
-        <DialogTitle>{editingDoctor ? "Edit Doctor" : "Add Doctor"}</DialogTitle>
+        <DialogTitle>
+          {editingDoctor ? "Edit Doctor" : "Add Doctor"}
+        </DialogTitle>
         <DialogContent>
           <TextField
             fullWidth

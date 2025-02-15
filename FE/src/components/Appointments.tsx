@@ -1,112 +1,117 @@
-import React from "react";
+import React, { useState } from "react";
 import {
-  Avatar,
-  Box,
-  Card,
-  CardContent,
-  IconButton,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
+  Avatar,
+  Select,
+  MenuItem,
+  IconButton,
   Typography,
   Paper,
+  Box,
 } from "@mui/material";
-import { Close } from "@mui/icons-material";
+import { CheckCircle, Cancel } from "@mui/icons-material";
 
-interface Appointment {
-  id: number;
-  patientName: string;
-  department: string;
-  age: number;
-  dateTime: string;
-  doctorName: string;
-  fees: string;
-  patientAvatar: string;
-  doctorAvatar: string;
-}
-
-const appointments: Appointment[] = [
-  {
-    id: 1,
-    patientName: "Richard James",
-    department: "Richard James",
-    age: 28,
-    dateTime: "24th July, 2024, 10:AM",
-    doctorName: "Dr. Richard James",
-    fees: "$50",
-    patientAvatar: "https://randomuser.me/api/portraits/men/75.jpg",
-    doctorAvatar: "https://randomuser.me/api/portraits/men/76.jpg",
-  },
-  {
-    id: 2,
-    patientName: "Richard James",
-    department: "Richard James",
-    age: 28,
-    dateTime: "24th July, 2024, 10:AM",
-    doctorName: "Dr. Richard James",
-    fees: "$50",
-    patientAvatar: "https://randomuser.me/api/portraits/men/75.jpg",
-    doctorAvatar: "https://randomuser.me/api/portraits/men/76.jpg",
-  },
+const doctors = [
+  { id: 1, name: "Dr. Richard James", image: "https://via.placeholder.com/40" },
+  { id: 2, name: "Dr. Emily Carter", image: "https://via.placeholder.com/40" },
 ];
 
-const Appointments: React.FC = () => {
+const AppointmentsTable = () => {
+  const [appointments, setAppointments] = useState([
+    {
+      id: 1,
+      patient: "Richard James",
+      patientImage: "https://via.placeholder.com/40",
+      department: "Dermatology",
+      age: 28,
+      dateTime: "24th July, 2024, 10:AM",
+      doctor: "",
+      status: "pending",
+    },
+    {
+      id: 2,
+      patient: "Richard James",
+      patientImage: "https://via.placeholder.com/40",
+      department: "Dermatology",
+      age: 28,
+      dateTime: "24th July, 2024, 10:AM",
+      doctor: doctors[0],
+      status: "confirmed",
+    },
+  ]);
+
+  const handleDoctorChange = (id, doctor) => {
+    setAppointments((prev) =>
+      prev.map((app) =>
+        app.id === id ? { ...app, doctor, status: "confirmed" } : app
+      )
+    );
+  };
+
   return (
-    <Card sx={{ p: 2, boxShadow: "none", borderRadius: 2 }}>
-      <CardContent>
-        <Typography variant="h6" fontWeight="bold" sx={{ mb: 2 }}>
-          All Appointments
-        </Typography>
-        <TableContainer component={Paper} sx={{ boxShadow: "none" }}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>#</TableCell>
-                <TableCell sx={{ fontWeight: "bold" }}>Patient</TableCell>
-                <TableCell sx={{ fontWeight: "bold" }}>Department</TableCell>
-                <TableCell sx={{ fontWeight: "bold" }}>Age</TableCell>
-                <TableCell sx={{ fontWeight: "bold" }}>Date & Time</TableCell>
-                <TableCell sx={{ fontWeight: "bold" }}>Doctor</TableCell>
-                <TableCell sx={{ fontWeight: "bold" }}>Fees</TableCell>
-                <TableCell />
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {appointments.map((appointment) => (
-                <TableRow key={appointment.id}>
-                  <TableCell>{appointment.id}</TableCell>
-                  <TableCell>
-                    <Box display="flex" alignItems="center" gap={1}>
-                      <Avatar src={appointment.patientAvatar} />
-                      {appointment.patientName}
-                    </Box>
-                  </TableCell>
-                  <TableCell>{appointment.department}</TableCell>
-                  <TableCell>{appointment.age}</TableCell>
-                  <TableCell>{appointment.dateTime}</TableCell>
-                  <TableCell>
-                    <Box display="flex" alignItems="center" gap={1}>
-                      <Avatar src={appointment.doctorAvatar} />
-                      {appointment.doctorName}
-                    </Box>
-                  </TableCell>
-                  <TableCell>{appointment.fees}</TableCell>
-                  <TableCell>
-                    <IconButton color="error">
-                      <Close />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </CardContent>
-    </Card>
+    <TableContainer component={Paper} sx={{ padding: 2, boxShadow: 'none' }}>
+      <Typography variant="h6" sx={{ marginBottom: 2 }}>
+        All Appointments
+      </Typography>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>#</TableCell>
+            <TableCell>Patient</TableCell>
+            <TableCell>Department</TableCell>
+            <TableCell>Age</TableCell>
+            <TableCell>Date & Time</TableCell>
+            <TableCell>Doctor</TableCell>
+            <TableCell>Status</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {appointments.map((appointment) => (
+            <TableRow key={appointment.id}>
+              <TableCell>{appointment.id}</TableCell>
+              <TableCell>
+                <Box display="flex" alignItems="center">
+                  <Avatar src={appointment.patientImage} sx={{ marginRight: 1 }} />
+                  {appointment.patient}
+                </Box>
+              </TableCell>
+              <TableCell>{appointment.department}</TableCell>
+              <TableCell>{appointment.age}</TableCell>
+              <TableCell>{appointment.dateTime}</TableCell>
+              <TableCell>
+                <Select
+                  value={appointment.doctor || ""}
+                  onChange={(e) => handleDoctorChange(appointment.id, e.target.value)}
+                  displayEmpty
+                  fullWidth
+                >
+                  <MenuItem value="">Select Doctor</MenuItem>
+                  {doctors.map((doc) => (
+                    <MenuItem key={doc.id} value={doc}>
+                      <Box display="flex" alignItems="center">
+                        <Avatar src={doc.image} sx={{ marginRight: 1 }} />
+                        {doc.name}
+                      </Box>
+                    </MenuItem>
+                  ))}
+                </Select>
+              </TableCell>
+              <TableCell>
+                <IconButton color={appointment.status === "confirmed" ? "success" : "error"}>
+                  {appointment.status === "confirmed" ? <CheckCircle /> : <Cancel />}
+                </IconButton>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 
-export default Appointments;
+export default AppointmentsTable;

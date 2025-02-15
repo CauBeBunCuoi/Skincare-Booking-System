@@ -24,6 +24,13 @@ import { MdDashboardCustomize } from "react-icons/md";
 import { FaCalendarAlt } from "react-icons/fa";
 import Appointments from "../components/Appointments";
 import DoctorsManagement from "../components/DoctorsManagement";
+import ServiceManagement from "../components/ServiceManagement";
+import { MdQuiz } from "react-icons/md";
+import QuizManager from "../components/QuizManager";
+import { FaUserTie } from "react-icons/fa";
+import StafManagement from "../components/StaffManager";
+import StaffManagement from "../components/StaffManager";
+import CustomerManagement from "../components/CustomerManagement";
 
 interface Patient {
   name: string;
@@ -97,10 +104,12 @@ const Admin: React.FC = () => {
           sx={{ borderRight: 1, borderColor: "divider", width: '240px' }}
         >
           <Tab label={<Box sx={{width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'start'}}><MdDashboardCustomize size={20}/> <Typography sx={{marginLeft: 2}}>Dashboard</Typography></Box>} {...a11yProps(0)} />
-          <Tab label={<Box sx={{width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'start'}}><FaUserDoctor size={20}/> <Typography sx={{marginLeft: 2}}>Doctor List</Typography></Box>} {...a11yProps(0)} />
-          <Tab label={<Box sx={{width: '100%',display: 'flex', alignItems: 'center', justifyContent: 'start'}}><MdOutlineAccountCircle size={20}/> <Typography sx={{marginLeft: 2}}>Account List</Typography></Box>} {...a11yProps(1)} />
-          <Tab label={<Box sx={{width: '100%',display: 'flex', alignItems: 'center', justifyContent: 'start'}}><MdHomeRepairService  size={20}/> <Typography sx={{marginLeft: 2}}>Service List</Typography></Box>} {...a11yProps(2)} />
+          <Tab label={<Box sx={{width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'start'}}><FaUserDoctor size={20}/> <Typography sx={{marginLeft: 2}}>Doctor Manager</Typography></Box>} {...a11yProps(0)} />
+          <Tab label={<Box sx={{width: '100%',display: 'flex', alignItems: 'center', justifyContent: 'start'}}><MdOutlineAccountCircle size={20}/> <Typography sx={{marginLeft: 2}}>Account Manager</Typography></Box>} {...a11yProps(1)} />
+          <Tab label={<Box sx={{width: '100%',display: 'flex', alignItems: 'center', justifyContent: 'start'}}><MdHomeRepairService  size={20}/> <Typography sx={{marginLeft: 2}}>Service Manager</Typography></Box>} {...a11yProps(2)} />
           <Tab label={<Box sx={{width: '100%',display: 'flex', alignItems: 'center', justifyContent: 'start'}}><FaCalendarAlt  size={20}/> <Typography sx={{marginLeft: 2}}>Appointments</Typography></Box>} {...a11yProps(2)} />
+          <Tab label={<Box sx={{width: '100%',display: 'flex', alignItems: 'center', justifyContent: 'start'}}><MdQuiz  size={20}/> <Typography sx={{marginLeft: 2}}>Quiz Manager</Typography></Box>} {...a11yProps(2)} />
+          <Tab label={<Box sx={{width: '100%',display: 'flex', alignItems: 'center', justifyContent: 'start'}}><FaUserTie  size={20}/> <Typography sx={{marginLeft: 2}}>Staff Manager</Typography></Box>} {...a11yProps(2)} />
         </Tabs>
         <Box
           sx={{
@@ -115,7 +124,6 @@ const Admin: React.FC = () => {
               sx={{
                 flexGrow: 1,
                 p: 3,
-                backgroundColor: "#f9f9f9"
               }}
             >
               <AppBar
@@ -205,19 +213,19 @@ const Admin: React.FC = () => {
             <DoctorsManagement/>
           </TabPanel>
           <TabPanel value={value} index={2}>
-            Item Three
+            <CustomerManagement />
           </TabPanel>
           <TabPanel value={value} index={3}>
-            Item Four
+            <ServiceManagement/>
           </TabPanel>
           <TabPanel value={value} index={4}>
             <Appointments />
           </TabPanel>
           <TabPanel value={value} index={5}>
-            Item Six
+            <QuizManager/>
           </TabPanel>
           <TabPanel value={value} index={6}>
-            Item Seven
+            <StaffManagement/>
           </TabPanel>
         </Box>
       </Box>
