@@ -17,6 +17,7 @@ import {
   TextField,
   DialogActions,
   Button,
+  Box,
 } from "@mui/material";
 import { Add, Edit, Delete } from "@mui/icons-material";
 
@@ -47,11 +48,13 @@ const ServiceManagement: React.FC = () => {
     }
   };
   return (
-    <Card sx={{ maxWidth: "90%", margin: "auto", mt: 3, p: 2, boxShadow: "none" }}>
+    <Card sx={{ p: 2, boxShadow: "none", borderRadius: 2 }}>
       <CardContent>
-        <Typography variant="h6" gutterBottom>
-          All Services
-        </Typography>
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          <Typography variant="h6" fontWeight="bold">
+            Service Management
+          </Typography>
+        </Box>
 
         <TableContainer component={Paper} elevation={0}>
           <Table>

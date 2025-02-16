@@ -1,8 +1,25 @@
 import React, { useState } from "react";
 import {
-  Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-  IconButton, Typography, Paper, Card, CardContent, Button,
-  Dialog, DialogActions, DialogContent, DialogTitle, TextField, Select, MenuItem
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  IconButton,
+  Typography,
+  Paper,
+  Card,
+  CardContent,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+  Select,
+  MenuItem,
+  Box,
 } from "@mui/material";
 import { Add, Edit, Delete } from "@mui/icons-material";
 
@@ -10,7 +27,7 @@ import { Add, Edit, Delete } from "@mui/icons-material";
 const services = [
   { id: 1, name: "Spa Facial" },
   { id: 2, name: "Massage Body" },
-  { id: 3, name: "Hair Treatment" }
+  { id: 3, name: "Hair Treatment" },
 ];
 
 // Interface Quiz
@@ -26,7 +43,7 @@ const QuizManager: React.FC = () => {
   const [newQuiz, setNewQuiz] = useState<Quiz>({
     id: 0,
     question: "",
-    options: [{ text: "", serviceId: 1 }]
+    options: [{ text: "", serviceId: 1 }],
   });
 
   // Mở / đóng modal
@@ -38,7 +55,10 @@ const QuizManager: React.FC = () => {
 
   // Thêm quiz mới
   const handleAddQuiz = () => {
-    if (newQuiz.question.trim() && newQuiz.options.every(opt => opt.text.trim())) {
+    if (
+      newQuiz.question.trim() &&
+      newQuiz.options.every((opt) => opt.text.trim())
+    ) {
       setQuizzes([...quizzes, { ...newQuiz, id: quizzes.length + 1 }]);
       handleClose();
     }
@@ -46,7 +66,7 @@ const QuizManager: React.FC = () => {
 
   // Xóa quiz
   const handleDeleteQuiz = (id: number) => {
-    setQuizzes(quizzes.filter(quiz => quiz.id !== id));
+    setQuizzes(quizzes.filter((quiz) => quiz.id !== id));
   };
 
   // Cập nhật nội dung câu hỏi
@@ -55,7 +75,11 @@ const QuizManager: React.FC = () => {
   };
 
   // Cập nhật nội dung option
-  const handleOptionChange = (index: number, key: "text" | "serviceId", value: any) => {
+  const handleOptionChange = (
+    index: number,
+    key: "text" | "serviceId",
+    value: any
+  ) => {
     const updatedOptions = [...newQuiz.options];
     updatedOptions[index][key] = value;
     setNewQuiz({ ...newQuiz, options: updatedOptions });
@@ -63,26 +87,33 @@ const QuizManager: React.FC = () => {
 
   // Thêm option
   const addOption = () => {
-    setNewQuiz({ ...newQuiz, options: [...newQuiz.options, { text: "", serviceId: 1 }] });
+    setNewQuiz({
+      ...newQuiz,
+      options: [...newQuiz.options, { text: "", serviceId: 1 }],
+    });
   };
 
   // Xóa option
   const removeOption = (index: number) => {
     if (newQuiz.options.length > 1) {
-      setNewQuiz({ ...newQuiz, options: newQuiz.options.filter((_, i) => i !== index) });
+      setNewQuiz({
+        ...newQuiz,
+        options: newQuiz.options.filter((_, i) => i !== index),
+      });
     }
   };
 
   return (
-    <Card sx={{ maxWidth: "90%", margin: "auto", mt: 3, p: 2, boxShadow: 'none' }}>
+    <Card sx={{ p: 2, boxShadow: "none", borderRadius: 2 }}>
       <CardContent>
-        <Typography variant="h6" gutterBottom>
-          Quản lý Quiz
-        </Typography>
-
-        <Button variant="contained" startIcon={<Add />} onClick={handleOpen}>
-          Thêm Quiz
-        </Button>
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          <Typography variant="h6" fontWeight="bold">
+            Quiz Management
+          </Typography>
+          <Button variant="contained" startIcon={<Add />} onClick={handleOpen}>
+            Add Quiz
+          </Button>
+        </Box>
 
         <TableContainer component={Paper} sx={{ mt: 2 }}>
           <Table>
@@ -103,12 +134,19 @@ const QuizManager: React.FC = () => {
                     {quiz.options.map((opt, index) => (
                       <div key={index}>
                         {opt.text} -{" "}
-                        {services.find(service => service.id === opt.serviceId)?.name}
+                        {
+                          services.find(
+                            (service) => service.id === opt.serviceId
+                          )?.name
+                        }
                       </div>
                     ))}
                   </TableCell>
                   <TableCell>
-                    <IconButton color="error" onClick={() => handleDeleteQuiz(quiz.id)}>
+                    <IconButton
+                      color="error"
+                      onClick={() => handleDeleteQuiz(quiz.id)}
+                    >
                       <Delete />
                     </IconButton>
                   </TableCell>
@@ -132,17 +170,29 @@ const QuizManager: React.FC = () => {
             onChange={handleQuestionChange}
           />
           {newQuiz.options.map((option, index) => (
-            <div key={index} style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 10 }}>
+            <div
+              key={index}
+              style={{
+                display: "flex",
+                gap: 10,
+                alignItems: "center",
+                marginBottom: 10,
+              }}
+            >
               <TextField
                 label={`Lựa chọn ${index + 1}`}
                 variant="outlined"
                 value={option.text}
-                onChange={(e) => handleOptionChange(index, "text", e.target.value)}
+                onChange={(e) =>
+                  handleOptionChange(index, "text", e.target.value)
+                }
                 fullWidth
               />
               <Select
                 value={option.serviceId}
-                onChange={(e) => handleOptionChange(index, "serviceId", e.target.value)}
+                onChange={(e) =>
+                  handleOptionChange(index, "serviceId", e.target.value)
+                }
               >
                 {services.map((service) => (
                   <MenuItem key={service.id} value={service.id}>

@@ -103,13 +103,13 @@ const Admin: React.FC = () => {
           aria-label="Vertical tabs example"
           sx={{ borderRight: 1, borderColor: "divider", width: '240px' }}
         >
-          <Tab label={<Box sx={{width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'start'}}><MdDashboardCustomize size={20}/> <Typography sx={{marginLeft: 2}}>Dashboard</Typography></Box>} {...a11yProps(0)} />
-          <Tab label={<Box sx={{width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'start'}}><FaUserDoctor size={20}/> <Typography sx={{marginLeft: 2}}>Doctor Manager</Typography></Box>} {...a11yProps(0)} />
-          <Tab label={<Box sx={{width: '100%',display: 'flex', alignItems: 'center', justifyContent: 'start'}}><MdOutlineAccountCircle size={20}/> <Typography sx={{marginLeft: 2}}>Account Manager</Typography></Box>} {...a11yProps(1)} />
-          <Tab label={<Box sx={{width: '100%',display: 'flex', alignItems: 'center', justifyContent: 'start'}}><MdHomeRepairService  size={20}/> <Typography sx={{marginLeft: 2}}>Service Manager</Typography></Box>} {...a11yProps(2)} />
-          <Tab label={<Box sx={{width: '100%',display: 'flex', alignItems: 'center', justifyContent: 'start'}}><FaCalendarAlt  size={20}/> <Typography sx={{marginLeft: 2}}>Appointments</Typography></Box>} {...a11yProps(2)} />
-          <Tab label={<Box sx={{width: '100%',display: 'flex', alignItems: 'center', justifyContent: 'start'}}><MdQuiz  size={20}/> <Typography sx={{marginLeft: 2}}>Quiz Manager</Typography></Box>} {...a11yProps(2)} />
-          <Tab label={<Box sx={{width: '100%',display: 'flex', alignItems: 'center', justifyContent: 'start'}}><FaUserTie  size={20}/> <Typography sx={{marginLeft: 2}}>Staff Manager</Typography></Box>} {...a11yProps(2)} />
+          <Tab label={<Box sx={{width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'start'}}><MdDashboardCustomize size={20}/> <Typography sx={{marginLeft: 2, fontSize: '12px'}}>Dashboard</Typography></Box>} {...a11yProps(0)} />
+          <Tab label={<Box sx={{width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'start'}}><FaUserDoctor size={20}/> <Typography sx={{marginLeft: 2, fontSize: '12px'}}>Doctor Manager</Typography></Box>} {...a11yProps(0)} />
+          <Tab label={<Box sx={{width: '100%',display: 'flex', alignItems: 'center', justifyContent: 'start'}}><MdOutlineAccountCircle size={20}/> <Typography sx={{marginLeft: 2, fontSize: '12px'}}>Account Manager</Typography></Box>} {...a11yProps(1)} />
+          <Tab label={<Box sx={{width: '100%',display: 'flex', alignItems: 'center', justifyContent: 'start'}}><MdHomeRepairService  size={20}/> <Typography sx={{marginLeft: 2, fontSize: '12px'}}>Service Manager</Typography></Box>} {...a11yProps(2)} />
+          <Tab label={<Box sx={{width: '100%',display: 'flex', alignItems: 'center', justifyContent: 'start'}}><FaCalendarAlt  size={20}/> <Typography sx={{marginLeft: 2, fontSize: '12px'}}>Appointments</Typography></Box>} {...a11yProps(2)} />
+          <Tab label={<Box sx={{width: '100%',display: 'flex', alignItems: 'center', justifyContent: 'start'}}><MdQuiz  size={20}/> <Typography sx={{marginLeft: 2, fontSize: '12px'}}>Quiz Manager</Typography></Box>} {...a11yProps(2)} />
+          <Tab label={<Box sx={{width: '100%',display: 'flex', alignItems: 'center', justifyContent: 'start'}}><FaUserTie  size={20}/> <Typography sx={{marginLeft: 2, fontSize: '12px'}}>Staff Manager</Typography></Box>} {...a11yProps(2)} />
         </Tabs>
         <Box
           sx={{
