@@ -26,6 +26,8 @@ export type QuizOptionDocument = QuizOption & Document & IQuizOption_Methods & I
 
 @Schema({ collection: 'quizOptions', timestamps: true })
 export class QuizOption {
+    _id?: Types.ObjectId;
+
     @Prop({ required: true })
     content: string;
 

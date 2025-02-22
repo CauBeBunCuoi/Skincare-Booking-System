@@ -1,0 +1,20 @@
+[{
+  "_id": 1,
+  "name": "Điều trị da liễu",
+  "description": "Loại điều trị chuyên sâu cho các vấn đề da liễu."
+},
+{
+  "_id": 2,
+  "name": "Da liễu thẩm mỹ",
+  "description": "Điều trị da liễu thẩm mỹ nhằm cải thiện vẻ ngoài của da."
+},
+{
+  "_id": 3,
+  "name": "Chăm sóc da nâng cao",
+  "description": "Chăm sóc da nâng cao với các sản phẩm và liệu trình tiên tiến."
+},
+{
+  "_id": 4,
+  "name": "Điều trị bằng laser và công nghệ cao",
+  "description": "Các phương pháp điều trị bằng laser và công nghệ cao cho làn da."
+}]

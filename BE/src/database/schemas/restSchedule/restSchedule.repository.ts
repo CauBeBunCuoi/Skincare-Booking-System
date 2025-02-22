@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { RestSchedule, RestScheduleModel } from "./restSchedule.schema";
-import { ObjectId } from "mongoose";
+import { Types } from "mongoose";
 
 @Injectable()
 export class RestScheduleRepository {
@@ -15,6 +15,14 @@ export class RestScheduleRepository {
 
   async findAll(): Promise<RestSchedule[]> {
     return this.restScheduleModel.find().exec();
+  }
+
+  async findByTherapistId(therapistId: Types.ObjectId): Promise<RestSchedule[]> {
+    return this.restScheduleModel.find({ accountId: new Types.ObjectId(therapistId) }).exec();
+  }
+
+  async findByTherapistIdAndRestDateAndWorkShiftId(therapistId: Types.ObjectId, restDate: Date, workShiftId: number): Promise<RestSchedule | null> {
+    return this.restScheduleModel.findOne({ accountId: new Types.ObjectId(therapistId), restDate: restDate, workShiftId: workShiftId }).exec();
   }
 
   async create(data: RestSchedule): Promise<RestSchedule> {

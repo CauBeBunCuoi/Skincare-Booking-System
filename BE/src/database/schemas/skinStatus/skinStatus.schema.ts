@@ -20,19 +20,22 @@ interface ISkinStatus_Virtuals {
 
 }
 
-export type SkinStatusDocument = SkinStatus & Document & ISkinStatus_Methods & ISkinStatus_Virtuals;  
+export type SkinStatusDocument = SkinStatus & Document & ISkinStatus_Methods & ISkinStatus_Virtuals;
 
 
 
 @Schema({ collection: 'skinStatuses', timestamps: true })
 export class SkinStatus {
+    @Prop({ type: Number, required: true })
+    _id?: number;
+
     @Prop({ required: true })
     name: string;
 }
 
 
 
-type SkinStatusModel = Model<SkinStatusDocument> & ISkinStatus_Statics; 
+type SkinStatusModel = Model<SkinStatusDocument> & ISkinStatus_Statics;
 const SkinStatusSchema = SchemaFactory.createForClass(SkinStatus);
 
 // Apply hooks
@@ -51,4 +54,4 @@ apply_Virtuals(SkinStatusSchema);
 // Apply indexes
 apply_Indexes(SkinStatusSchema);
 
-export {SkinStatusSchema, SkinStatusModel}  
+export { SkinStatusSchema, SkinStatusModel }  

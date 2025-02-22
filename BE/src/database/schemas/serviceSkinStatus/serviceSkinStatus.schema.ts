@@ -26,6 +26,8 @@ export type ServiceSkinStatusDocument = ServiceSkinStatus & Document & IServiceS
 
 @Schema({ collection: 'serviceSkinStatuses', timestamps: true })
 export class ServiceSkinStatus {
+    _id?: Types.ObjectId;
+
     @Prop({ type: Types.ObjectId, ref: 'Service', required: true })
     serviceId: Types.ObjectId;
   

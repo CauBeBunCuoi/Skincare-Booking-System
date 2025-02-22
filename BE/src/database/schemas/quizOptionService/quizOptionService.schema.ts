@@ -26,6 +26,8 @@ export type QuizOptionServiceDocument = QuizOptionService & Document & IQuizOpti
 
 @Schema({ collection: 'quizOptionServices', timestamps: true })
 export class QuizOptionService {
+    _id?: Types.ObjectId;
+
     @Prop({ type: Types.ObjectId, ref: 'QuizOption', required: true })
     quizOptionId: Types.ObjectId;
 

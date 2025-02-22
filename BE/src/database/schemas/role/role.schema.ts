@@ -26,6 +26,9 @@ export type RoleDocument = Role & Document & IRole_Methods & IRole_Virtuals;
 
 @Schema({ collection: 'roles', timestamps: true })
 export class Role {
+    @Prop({ type: Number, required: true })
+    _id?: number;
+
     @Prop({ required: true })
     name: string;
 }

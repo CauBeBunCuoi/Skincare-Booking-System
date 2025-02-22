@@ -1,0 +1,30 @@
+[
+    {
+        "_id": 1,
+        "name": "Da khỏe mạnh"
+    },
+    {
+        "_id": 2,
+        "name": "Da xỉn màu"
+    },
+    {
+        "_id": 3,
+        "name": "Da thiếu ẩm"
+    },
+    {
+        "_id": 4,
+        "name": "Da có nếp nhăn"
+    },
+    {
+        "_id": 5,
+        "name": "Da mụn"
+    },
+    {
+        "_id": 6,
+        "name": "Da kích ứng"
+    },
+    {
+        "_id": 7,
+        "name": "Da có vết thâm nám"
+    }
+]

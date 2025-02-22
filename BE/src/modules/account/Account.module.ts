@@ -7,12 +7,18 @@ import { TherapistBackground, TherapistBackgroundSchema } from 'src/database/sch
 import { RestSchedule, RestScheduleSchema } from 'src/database/schemas/restSchedule/restSchedule.schema';
 import { WorkShift, WorkShiftSchema } from 'src/database/schemas/workShift/workShift.schema';
 import { AccountsService } from './services/accounts.service';
-import { TherapistsService } from './services/therapists.service';
+import { TherapistAccountsService } from './services/therapistAccounts.service';
 import { AccountRepository } from 'src/database/schemas/account/account.repository';
 import { RoleRepository } from 'src/database/schemas/role/role.repository';
 import { TherapistBackgroundRepository } from 'src/database/schemas/therapistBackground/therapistBackground.repository';
 import { RestScheduleRepository } from 'src/database/schemas/restSchedule/restSchedule.repository';
 import { WorkShiftRepository } from 'src/database/schemas/workShift/workShift.repository';
+import { JwtService } from 'src/common/services/jwt.service';
+import { BcryptService } from 'src/common/services/bcrypt.service';
+import { Service, ServiceSchema } from 'src/database/schemas/service/service.schema';
+import { BookingModule } from '../booking/Booking.module';
+import { ServiceModule } from '../service/Service.module';
+import { FileService } from 'src/common/services/file.service';
 
 @Module({
   imports: [
@@ -20,9 +26,12 @@ import { WorkShiftRepository } from 'src/database/schemas/workShift/workShift.re
       { name: Account.name, schema: AccountSchema },                        // accounts
       { name: Role.name, schema: RoleSchema },                              // roles
       { name: TherapistBackground.name, schema: TherapistBackgroundSchema },// therapistBackgrounds
+      { name: Service.name, schema: ServiceSchema },                        // services
       { name: RestSchedule.name, schema: RestScheduleSchema },              // restSchedules
       { name: WorkShift.name, schema: WorkShiftSchema },                    // workShifts
-    ])
+    ]),
+    BookingModule,
+    ServiceModule
   ],
   controllers: [AccountController],
   providers: [
@@ -32,14 +41,28 @@ import { WorkShiftRepository } from 'src/database/schemas/workShift/workShift.re
     TherapistBackgroundRepository,
     RestScheduleRepository,
     WorkShiftRepository,
+    
 
-    // Services
+    // Inner Services
     AccountsService,
-    TherapistsService
+    TherapistAccountsService,
+
+    // Common Services
+    JwtService,
+    BcryptService,
+    FileService
+
+
   ],
   exports: [
+    // Repositories
+    AccountRepository,
+    RestScheduleRepository,
+    WorkShiftRepository,
+    
+    // Inner Services
     AccountsService,
-    TherapistsService
+    TherapistAccountsService,
   ]
 })
 export class AccountModule implements NestModule {

@@ -1,5 +1,5 @@
 import { Schema, Prop, SchemaFactory, Virtual } from '@nestjs/mongoose';
-import mongoose, { Document, Model, model } from 'mongoose';
+import mongoose, { Document, Model, model, Types } from 'mongoose';
 import { IsNumber, isNumber, IsString, isString } from 'class-validator';
 import { apply_PostHooks, apply_PreHooks } from './quizQuestion.hooks';
 import { apply_Methods } from './quizQuestion.methods';
@@ -26,6 +26,8 @@ export type QuizQuestionDocument = QuizQuestion & Document & IQuizQuestion_Metho
 
 @Schema({ collection: 'quizQuestions', timestamps: true })
 export class QuizQuestion {
+    _id?: Types.ObjectId;
+
     @Prop({ required: true })
     content: string;
 }

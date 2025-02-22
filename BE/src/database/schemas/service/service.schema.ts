@@ -1,5 +1,5 @@
 import { Schema, Prop, SchemaFactory, Virtual } from '@nestjs/mongoose';
-import mongoose, { Document, Model, model } from 'mongoose';
+import mongoose, { Document, Model, model, Types } from 'mongoose';
 import { IsNumber, isNumber, IsString, isString } from 'class-validator';
 import { apply_PostHooks, apply_PreHooks } from './service.hooks';
 import { apply_Methods } from './service.methods';
@@ -26,8 +26,13 @@ export type ServiceDocument = Service & Document & IService_Methods & IService_V
 
 @Schema({ collection: 'services', timestamps: true })
 export class Service {
+    _id?: Types.ObjectId;
+
     @Prop({ required: true })
     serviceTypeId: number;
+
+    @Prop({ required: true })
+    name: string
   
     @Prop({ required: true })
     duration: number;
@@ -37,6 +42,9 @@ export class Service {
   
     @Prop({ required: true })
     fee: number;
+
+    @Prop({ default: false, required: true })
+    isDeleted: boolean;
 }
 
 

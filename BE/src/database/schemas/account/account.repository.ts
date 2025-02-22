@@ -9,11 +9,19 @@ export class AccountRepository {
   ) { }
 
   async findById(id: any): Promise<Account | null> {
-    return this.accountModel.findById(id).exec();
+    return this.accountModel.findById(id).lean().exec();
   }
 
   async findAll(): Promise<Account[]> {
-    return this.accountModel.find().exec();
+    return this.accountModel.find({ isDeleted: false }).exec();
+  }
+
+  async findByRoleId(roleId: any): Promise<Account[]> {
+    return this.accountModel.find({ roleId: roleId, isDeleted: false }).lean().exec();
+  }
+
+  async findByRoleIds(roleIds: any[]): Promise<Account[]> {
+    return this.accountModel.find({ roleId: { $in: roleIds }, isDeleted: false }).lean().exec();
   }
 
   async create(account: Account): Promise<Account> {
@@ -25,6 +33,6 @@ export class AccountRepository {
   }
 
   async delete(id: any): Promise<Account | null> {
-    return this.accountModel.findByIdAndDelete(id).exec();
+    return this.accountModel.findByIdAndUpdate(id, { isDeleted: true }).exec();
   }
 }

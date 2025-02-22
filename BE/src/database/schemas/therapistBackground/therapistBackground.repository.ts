@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { TherapistBackground, TherapistBackgroundModel } from "./therapistBackground.schema";
-import { ObjectId } from "mongoose";
+import { Types } from "mongoose";
 
 @Injectable()
 export class TherapistBackgroundRepository {
@@ -17,8 +17,16 @@ export class TherapistBackgroundRepository {
     return this.therapistBackgroundModel.find().exec();
   }
 
+  async findByTherapistId(therapistId: Types.ObjectId): Promise<TherapistBackground[] | null> {
+    return this.therapistBackgroundModel.find({ accountId: new Types.ObjectId(therapistId) }).exec();
+  }
+
   async create(therapistBackground: TherapistBackground): Promise<TherapistBackground> {
     return this.therapistBackgroundModel.create(therapistBackground);
+  }
+
+  async createMany(therapistBackgrounds: TherapistBackground[]): Promise<TherapistBackground[]> {
+    return this.therapistBackgroundModel.insertMany(therapistBackgrounds);
   }
 
   async update(id: any, therapistBackground: TherapistBackground): Promise<TherapistBackground | null> {

@@ -1,0 +1,227 @@
+[
+    {
+        "_id": {
+            "$oid": "67af60010000000000000001"
+        },
+        "content": "Da dầu",
+        "quizQuestionId": {
+            "$oid": "67af60000000000000000001"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67af60010000000000000002"
+        },
+        "content": "Da khô",
+        "quizQuestionId": {
+            "$oid": "67af60000000000000000001"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67af60010000000000000003"
+        },
+        "content": "Da nhạy cảm",
+        "quizQuestionId": {
+            "$oid": "67af60000000000000000001"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67af60010000000000000004"
+        },
+        "content": "Da hỗn hợp",
+        "quizQuestionId": {
+            "$oid": "67af60000000000000000001"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67af60010000000000000005"
+        },
+        "content": "Da lão hóa",
+        "quizQuestionId": {
+            "$oid": "67af60000000000000000001"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67af60020000000000000001"
+        },
+        "content": "Mụn",
+        "quizQuestionId": {
+            "$oid": "67af60000000000000000002"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67af60020000000000000002"
+        },
+        "content": "Nám",
+        "quizQuestionId": {
+            "$oid": "67af60000000000000000002"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67af60020000000000000003"
+        },
+        "content": "Sẹo rỗ",
+        "quizQuestionId": {
+            "$oid": "67af60000000000000000002"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67af60020000000000000004"
+        },
+        "content": "Da không đều màu",
+        "quizQuestionId": {
+            "$oid": "67af60000000000000000002"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67af60020000000000000005"
+        },
+        "content": "Lão hóa",
+        "quizQuestionId": {
+            "$oid": "67af60000000000000000002"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67af60030000000000000001"
+        },
+        "content": "Trị mụn chuyên sâu",
+        "quizQuestionId": {
+            "$oid": "67af60000000000000000003"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67af60030000000000000002"
+        },
+        "content": "Trẻ hóa da",
+        "quizQuestionId": {
+            "$oid": "67af60000000000000000003"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67af60030000000000000003"
+        },
+        "content": "Tái tạo da",
+        "quizQuestionId": {
+            "$oid": "67af60000000000000000003"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67af60030000000000000004"
+        },
+        "content": "Điều trị sắc tố",
+        "quizQuestionId": {
+            "$oid": "67af60000000000000000003"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67af60030000000000000005"
+        },
+        "content": "Xóa sẹo rỗ",
+        "quizQuestionId": {
+            "$oid": "67af60000000000000000003"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67af60040000000000000001"
+        },
+        "content": "Lăn kim",
+        "quizQuestionId": {
+            "$oid": "67af60000000000000000004"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67af60040000000000000002"
+        },
+        "content": "Laser",
+        "quizQuestionId": {
+            "$oid": "67af60000000000000000004"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67af60040000000000000003"
+        },
+        "content": "Peel da",
+        "quizQuestionId": {
+            "$oid": "67af60000000000000000004"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67af60040000000000000004"
+        },
+        "content": "Điện di",
+        "quizQuestionId": {
+            "$oid": "67af60000000000000000004"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67af60040000000000000005"
+        },
+        "content": "Chưa từng điều trị",
+        "quizQuestionId": {
+            "$oid": "67af60000000000000000004"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67af60050000000000000001"
+        },
+        "content": "Da mịn màng, không còn mụn",
+        "quizQuestionId": {
+            "$oid": "67af60000000000000000005"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67af60050000000000000002"
+        },
+        "content": "Làn da đều màu, sáng mịn",
+        "quizQuestionId": {
+            "$oid": "67af60000000000000000005"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67af60050000000000000003"
+        },
+        "content": "Lỗ chân lông se khít",
+        "quizQuestionId": {
+            "$oid": "67af60000000000000000005"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67af60050000000000000004"
+        },
+        "content": "Xóa bỏ hoàn toàn sẹo rỗ",
+        "quizQuestionId": {
+            "$oid": "67af60000000000000000005"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67af60050000000000000005"
+        },
+        "content": "Chống lão hóa, da căng bóng",
+        "quizQuestionId": {
+            "$oid": "67af60000000000000000005"
+        }
+    }
+]

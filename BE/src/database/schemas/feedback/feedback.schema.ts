@@ -26,6 +26,8 @@ export type FeedbackDocument = Feedback & Document & IFeedback_Methods & IFeedba
 
 @Schema({ collection: 'feedbacks', timestamps: true })
 export class Feedback {
+    _id?: Types.ObjectId;
+
     @Prop({ type: Types.ObjectId, ref: 'Booking', required: true })
     bookingId: Types.ObjectId;
   

@@ -1,6 +1,6 @@
 import { Schema, Prop, SchemaFactory, Virtual } from '@nestjs/mongoose';
-import mongoose, { Document, Model, model, Types } from 'mongoose';
-import { IsNumber, isNumber, IsString, isString } from 'class-validator';
+import { Document, Model, model, Types } from 'mongoose';
+import { IsNumber, isNumber, IsOptional, IsString, isString } from 'class-validator';
 import { apply_PostHooks, apply_PreHooks } from './booking.hooks';
 import { apply_Methods } from './booking.methods';
 import { apply_Statics } from './booking.statics';
@@ -20,58 +20,63 @@ interface IBooking_Virtuals {
 
 }
 
-export type BookingDocument = Booking & Document & IBooking_Methods & IBooking_Virtuals;  
+export type BookingDocument = Booking & Document & IBooking_Methods & IBooking_Virtuals;
 
 
 
 @Schema({ collection: 'bookings', timestamps: true })
 export class Booking {
+    _id?: Types.ObjectId;
+
+    @Prop({ type: Types.ObjectId, ref: 'Account', required: true })
+    accountId: Types.ObjectId;
+
     @Prop({ type: Types.ObjectId, ref: 'Service', required: true })
     serviceId: Types.ObjectId;
-  
+
     @Prop({ required: true })
     bookStatusId: number;
-  
+
     @Prop({ required: true })
     bookingDate: Date;
-  
+
     @Prop({ required: true })
     appointmentTime: Date;
-  
+
     @Prop()
     startTime: Date;
-  
+
     @Prop()
     endTime: Date;
-  
+
     @Prop()
     checkInTime: Date;
-  
+
     @Prop()
     checkOutTime: Date;
-  
+
     @Prop()
     isAssigned: boolean;
-  
+
     @Prop({ type: Types.ObjectId, ref: 'Account' })
     assignedTherapistId: Types.ObjectId;
-  
+
     @Prop()
     extraFee: number;
-  
+
     @Prop()
     totalFee: number;
-  
+
     @Prop()
     hasPaid: boolean;
-  
+
     @Prop()
     cancelReason: string;
 }
 
 
 
-type BookingModel = Model<BookingDocument> & IBooking_Statics; 
+type BookingModel = Model<BookingDocument> & IBooking_Statics;
 const BookingSchema = SchemaFactory.createForClass(Booking);
 
 // Apply hooks
@@ -90,4 +95,4 @@ apply_Virtuals(BookingSchema);
 // Apply indexes
 apply_Indexes(BookingSchema);
 
-export {BookingSchema, BookingModel}  
+export { BookingSchema, BookingModel }  

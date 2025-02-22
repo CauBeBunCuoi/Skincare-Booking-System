@@ -9,7 +9,7 @@ export class BookingStatusRepository {
     @InjectModel(BookingStatus.name) private readonly bookingStatusModel: BookingStatusModel,
   ) {}
 
-  async findById(id: any): Promise<BookingStatus | null> {
+  async findById(id: number): Promise<BookingStatus | null> {
     return this.bookingStatusModel.findById(id).exec();
   }
 

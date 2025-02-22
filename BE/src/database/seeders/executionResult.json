@@ -1,0 +1,22 @@
+[{
+  "_id": {
+    "$oid": "67b057651d3b85d05e9f88e1"
+  },
+  "bookingId": {
+    "$oid": "67b0406a1d3b85d05e9f88d1"
+  },
+  "customerDescription": "Da có nhiều mụn và vết thâm.",
+  "treatmentDescription": "Điều trị mụn bằng liệu pháp laser.",
+  "therapistRecommend": "Nên tiếp tục liệu trình trong 4 tuần."
+},
+{
+  "_id": {
+    "$oid": "67b057651d3b85d05e9f88e2"
+  },
+  "bookingId": {
+    "$oid": "67b0406a1d3b85d05e9f88d2"
+  },
+  "customerDescription": "Da khô và nhạy cảm, cần dưỡng ẩm.",
+  "treatmentDescription": "Dưỡng ẩm và chăm sóc da nhạy cảm.",
+  "therapistRecommend": "Sử dụng kem dưỡng ẩm hàng ngày."
+}]

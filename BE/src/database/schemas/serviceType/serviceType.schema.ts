@@ -20,22 +20,25 @@ interface IServiceType_Virtuals {
 
 }
 
-export type ServiceTypeDocument = ServiceType & Document & IServiceType_Methods & IServiceType_Virtuals;  
+export type ServiceTypeDocument = ServiceType & Document & IServiceType_Methods & IServiceType_Virtuals;
 
 
 
 @Schema({ collection: 'serviceTypes', timestamps: true })
 export class ServiceType {
+    @Prop({ type: Number, required: true })
+    _id?: number;
+
     @Prop({ required: true })
     name: string;
-  
+
     @Prop()
     description: string;
 }
 
 
 
-type ServiceTypeModel = Model<ServiceTypeDocument> & IServiceType_Statics; 
+type ServiceTypeModel = Model<ServiceTypeDocument> & IServiceType_Statics;
 const ServiceTypeSchema = SchemaFactory.createForClass(ServiceType);
 
 // Apply hooks
@@ -54,4 +57,4 @@ apply_Virtuals(ServiceTypeSchema);
 // Apply indexes
 apply_Indexes(ServiceTypeSchema);
 
-export {ServiceTypeSchema, ServiceTypeModel}  
+export { ServiceTypeSchema, ServiceTypeModel }  

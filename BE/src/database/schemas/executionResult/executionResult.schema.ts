@@ -26,6 +26,8 @@ export type ExecutionResultDocument = ExecutionResult & Document & IExecutionRes
 
 @Schema({ collection: 'executionResults', timestamps: true })
 export class ExecutionResult {
+    _id?: Types.ObjectId;
+
     @Prop({ type: Types.ObjectId, ref: 'Booking', required: true })
     bookingId: Types.ObjectId;
   
