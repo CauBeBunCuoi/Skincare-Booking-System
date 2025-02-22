@@ -1,0 +1,494 @@
+[{
+  "_id": {
+    "$oid": "67b0406a1d3b85d05e9f88d1"
+  },
+  "serviceId": {
+    "$oid": "67af5c651d3b85d05e9f88a2"
+  },
+  "bookStatusId": 7,
+  "bookingDate": {
+    "$date": "2025-02-14T10:00:00.000Z"
+  },
+  "appointmentTime": {
+    "$date": "2025-02-20T10:00:00.000Z"
+  },
+  "startTime": {
+    "$date": "2025-02-20T10:00:00.000Z"
+  },
+  "endTime": {
+    "$date": "2025-02-20T11:00:00.000Z"
+  },
+  "checkInTime": null,
+  "checkOutTime": null,
+  "isAssigned": false,
+  "assignedTherapistId": null,
+  "extraFee": 0,
+  "totalFee": 500000,
+  "hasPaid": false,
+  "cancelReason": "Thằng khách bị ngu",
+  "createdAt": {
+    "$date": "2025-02-14T09:30:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T09:48:40.044Z"
+  },
+  "__v": 0,
+  "accountId": {
+    "$oid": "67b0a414447883e5fa80f8b2"
+  }
+},
+{
+  "_id": {
+    "$oid": "67b0406a1d3b85d05e9f88d2"
+  },
+  "serviceId": {
+    "$oid": "67af5c651d3b85d05e9f88a2"
+  },
+  "bookStatusId": 5,
+  "bookingDate": {
+    "$date": "2025-02-15T11:00:00.000Z"
+  },
+  "appointmentTime": {
+    "$date": "2025-02-21T13:00:00.000Z"
+  },
+  "startTime": {
+    "$date": "2025-02-21T13:00:00.000Z"
+  },
+  "endTime": {
+    "$date": "2025-02-21T12:00:00.000Z"
+  },
+  "checkInTime": {
+    "$date": "2025-02-17T17:00:02.000Z"
+  },
+  "checkOutTime": {
+    "$date": "2025-02-17T17:03:01.000Z"
+  },
+  "isAssigned": false,
+  "assignedTherapistId": null,
+  "extraFee": 0,
+  "totalFee": 750000,
+  "hasPaid": false,
+  "cancelReason": null,
+  "createdAt": {
+    "$date": "2025-02-15T10:30:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T10:03:01.718Z"
+  },
+  "__v": 0,
+  "accountId": {
+    "$oid": "67b0a414447883e5fa80f8b2"
+  }
+},
+{
+  "_id": {
+    "$oid": "67b0406a1d3b85d05e9f88d3"
+  },
+  "serviceId": {
+    "$oid": "67af5c651d3b85d05e9f88a2"
+  },
+  "bookStatusId": 3,
+  "bookingDate": {
+    "$date": "2025-02-16T12:00:00.000Z"
+  },
+  "appointmentTime": {
+    "$date": "2025-02-16T12:00:00.000Z"
+  },
+  "startTime": {
+    "$date": "2025-02-16T12:00:00.000Z"
+  },
+  "endTime": {
+    "$date": "2025-02-16T13:00:00.000Z"
+  },
+  "checkInTime": null,
+  "checkOutTime": null,
+  "isAssigned": true,
+  "assignedTherapistId": {
+    "$oid": "67b09c974b0a70299990bfb5"
+  },
+  "extraFee": 0,
+  "totalFee": 1000000,
+  "hasPaid": false,
+  "cancelReason": null,
+  "createdAt": {
+    "$date": "2025-02-16T11:30:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-16T11:30:00.000Z"
+  },
+  "__v": 0,
+  "accountId": {
+    "$oid": "67b0a414447883e5fa80f8b2"
+  }
+},
+{
+  "_id": {
+    "$oid": "67b0406a1d3b85d05e9f88d4"
+  },
+  "serviceId": {
+    "$oid": "67af5c651d3b85d05e9f88a2"
+  },
+  "bookStatusId": 4,
+  "bookingDate": {
+    "$date": "2025-02-17T13:00:00.000Z"
+  },
+  "appointmentTime": {
+    "$date": "2025-02-17T13:00:00.000Z"
+  },
+  "startTime": {
+    "$date": "2025-02-17T13:00:00.000Z"
+  },
+  "endTime": {
+    "$date": "2025-02-17T14:00:00.000Z"
+  },
+  "checkInTime": {
+    "$date": "2025-02-17T13:00:00.000Z"
+  },
+  "checkOutTime": null,
+  "isAssigned": true,
+  "assignedTherapistId": {
+    "$oid": "67b09c974b0a70299990bfb5"
+  },
+  "extraFee": 0,
+  "totalFee": 600000,
+  "hasPaid": false,
+  "cancelReason": null,
+  "createdAt": {
+    "$date": "2025-02-17T12:30:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T12:30:00.000Z"
+  },
+  "__v": 0,
+  "accountId": {
+    "$oid": "67b0a414447883e5fa80f8b2"
+  }
+},
+{
+  "_id": {
+    "$oid": "67b0406a1d3b85d05e9f88d5"
+  },
+  "serviceId": {
+    "$oid": "67af5c651d3b85d05e9f88a2"
+  },
+  "bookStatusId": 1,
+  "bookingDate": {
+    "$date": "2025-02-18T14:00:00.000Z"
+  },
+  "appointmentTime": {
+    "$date": "2025-02-18T14:00:00.000Z"
+  },
+  "startTime": {
+    "$date": "2025-02-18T14:00:00.000Z"
+  },
+  "endTime": {
+    "$date": "2025-02-18T15:00:00.000Z"
+  },
+  "checkInTime": null,
+  "checkOutTime": null,
+  "isAssigned": true,
+  "assignedTherapistId": {
+    "$oid": "67b09c604b0a70299990bfac"
+  },
+  "extraFee": 0,
+  "totalFee": 400000,
+  "hasPaid": false,
+  "cancelReason": null,
+  "createdAt": {
+    "$date": "2025-02-18T13:30:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-18T13:30:00.000Z"
+  },
+  "__v": 0,
+  "accountId": {
+    "$oid": "67b0a414447883e5fa80f8b2"
+  }
+},
+{
+  "_id": {
+    "$oid": "67b0a4e8447883e5fa80f8c6"
+  },
+  "accountId": {
+    "$oid": "67b0a414447883e5fa80f8b2"
+  },
+  "serviceId": {
+    "$oid": "67af5c651d3b85d05e9f88a2"
+  },
+  "bookStatusId": 1,
+  "bookingDate": {
+    "$date": "2025-02-15T14:30:00.337Z"
+  },
+  "appointmentTime": {
+    "$date": "2025-02-15T13:00:00.000Z"
+  },
+  "startTime": {
+    "$date": "2025-02-15T13:00:00.000Z"
+  },
+  "endTime": {
+    "$date": "2025-02-15T18:00:00.000Z"
+  },
+  "checkInTime": null,
+  "checkOutTime": null,
+  "isAssigned": true,
+  "assignedTherapistId": {
+    "$oid": "67b0406a1d3b85d05e9f88d1"
+  },
+  "extraFee": 0,
+  "totalFee": 0,
+  "hasPaid": false,
+  "cancelReason": null,
+  "createdAt": {
+    "$date": "2025-02-15T14:30:00.338Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-15T14:30:00.338Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b0a4ea447883e5fa80f8c9"
+  },
+  "accountId": {
+    "$oid": "67b0a414447883e5fa80f8b2"
+  },
+  "serviceId": {
+    "$oid": "67af5c651d3b85d05e9f88a2"
+  },
+  "bookStatusId": 1,
+  "bookingDate": {
+    "$date": "2025-02-15T14:30:02.736Z"
+  },
+  "appointmentTime": {
+    "$date": "2025-02-15T13:00:00.000Z"
+  },
+  "startTime": {
+    "$date": "2025-02-15T13:00:00.000Z"
+  },
+  "endTime": {
+    "$date": "2025-02-15T18:00:00.000Z"
+  },
+  "checkInTime": null,
+  "checkOutTime": null,
+  "isAssigned": true,
+  "assignedTherapistId": {
+    "$oid": "67b0406a1d3b85d05e9f88d1"
+  },
+  "extraFee": 0,
+  "totalFee": 0,
+  "hasPaid": false,
+  "cancelReason": null,
+  "createdAt": {
+    "$date": "2025-02-15T14:30:02.737Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-15T14:30:02.737Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b19648206ff0004e51dc80"
+  },
+  "accountId": {
+    "$oid": "67b0a414447883e5fa80f8b2"
+  },
+  "serviceId": {
+    "$oid": "67af5c651d3b85d05e9f88a2"
+  },
+  "bookStatusId": 1,
+  "bookingDate": {
+    "$date": "2025-02-16T07:39:52.398Z"
+  },
+  "appointmentTime": {
+    "$date": "2025-02-23T13:00:00.000Z"
+  },
+  "startTime": {
+    "$date": "2025-02-23T13:00:00.000Z"
+  },
+  "endTime": {
+    "$date": "2025-02-23T15:00:00.000Z"
+  },
+  "checkInTime": null,
+  "checkOutTime": null,
+  "isAssigned": true,
+  "assignedTherapistId": {
+    "$oid": "67b09c974b0a70299990bfb5"
+  },
+  "extraFee": 0,
+  "totalFee": 0,
+  "hasPaid": false,
+  "cancelReason": null,
+  "createdAt": {
+    "$date": "2025-02-16T07:39:52.404Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-16T07:39:52.404Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b196b0e6109a055088e4e3"
+  },
+  "accountId": {
+    "$oid": "67b0a414447883e5fa80f8b2"
+  },
+  "serviceId": {
+    "$oid": "67af5c651d3b85d05e9f88a2"
+  },
+  "bookStatusId": 1,
+  "bookingDate": {
+    "$date": "2025-02-16T07:41:36.161Z"
+  },
+  "appointmentTime": {
+    "$date": "2025-02-23T13:00:00.000Z"
+  },
+  "startTime": {
+    "$date": "2025-02-23T17:00:00.000Z"
+  },
+  "endTime": {
+    "$date": "2025-02-23T19:00:00.000Z"
+  },
+  "checkInTime": null,
+  "checkOutTime": null,
+  "isAssigned": true,
+  "assignedTherapistId": {
+    "$oid": "67b09c974b0a70299990bfb5"
+  },
+  "extraFee": 0,
+  "totalFee": 0,
+  "hasPaid": false,
+  "cancelReason": null,
+  "createdAt": {
+    "$date": "2025-02-16T07:41:36.166Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-16T07:41:36.166Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b1979d87d288618280e082"
+  },
+  "accountId": {
+    "$oid": "67b0a414447883e5fa80f8b2"
+  },
+  "serviceId": {
+    "$oid": "67af5c651d3b85d05e9f88a2"
+  },
+  "bookStatusId": 1,
+  "bookingDate": {
+    "$date": "2025-02-16T07:45:33.912Z"
+  },
+  "appointmentTime": {
+    "$date": "2025-02-16T16:00:00.000Z"
+  },
+  "startTime": {
+    "$date": "2025-02-16T16:00:00.000Z"
+  },
+  "endTime": {
+    "$date": "2025-02-16T17:00:00.000Z"
+  },
+  "checkInTime": null,
+  "checkOutTime": null,
+  "isAssigned": true,
+  "assignedTherapistId": {
+    "$oid": "67b09c974b0a70299990bfb5"
+  },
+  "extraFee": 0,
+  "totalFee": 0,
+  "hasPaid": false,
+  "cancelReason": null,
+  "createdAt": {
+    "$date": "2025-02-16T07:45:33.917Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-16T07:45:33.917Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2d31b8092df58fb366f52"
+  },
+  "accountId": {
+    "$oid": "67b0a414447883e5fa80f8b2"
+  },
+  "serviceId": {
+    "$oid": "67af5c651d3b85d05e9f88a2"
+  },
+  "bookStatusId": 1,
+  "bookingDate": {
+    "$date": "2025-02-17T06:11:39.191Z"
+  },
+  "appointmentTime": {
+    "$date": "2025-02-19T17:00:00.000Z"
+  },
+  "startTime": {
+    "$date": "2025-02-19T17:00:00.000Z"
+  },
+  "endTime": {
+    "$date": "2025-02-19T20:00:00.000Z"
+  },
+  "checkInTime": null,
+  "checkOutTime": null,
+  "isAssigned": true,
+  "assignedTherapistId": {
+    "$oid": "67b09c974b0a70299990bfb5"
+  },
+  "extraFee": 0,
+  "totalFee": 0,
+  "hasPaid": false,
+  "cancelReason": null,
+  "createdAt": {
+    "$date": "2025-02-17T06:11:39.198Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T06:11:39.198Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2d3988092df58fb366f88"
+  },
+  "accountId": {
+    "$oid": "67b0a414447883e5fa80f8b2"
+  },
+  "serviceId": {
+    "$oid": "67af5c651d3b85d05e9f88a2"
+  },
+  "bookStatusId": 1,
+  "bookingDate": {
+    "$date": "2025-02-17T06:13:44.245Z"
+  },
+  "appointmentTime": {
+    "$date": "2025-02-19T17:00:00.000Z"
+  },
+  "startTime": {
+    "$date": "2025-02-19T17:00:00.000Z"
+  },
+  "endTime": {
+    "$date": "2025-02-19T20:00:00.000Z"
+  },
+  "checkInTime": null,
+  "checkOutTime": null,
+  "isAssigned": true,
+  "assignedTherapistId": {
+    "$oid": "67b09c604b0a70299990bfac"
+  },
+  "extraFee": 0,
+  "totalFee": 0,
+  "hasPaid": false,
+  "cancelReason": null,
+  "createdAt": {
+    "$date": "2025-02-17T06:13:44.246Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T06:13:44.246Z"
+  },
+  "__v": 0
+}]

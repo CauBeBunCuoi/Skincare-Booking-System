@@ -19,6 +19,8 @@ import { SkinTypeRepository } from 'src/database/schemas/skinType/skinType.repos
 import { SkinStatusRepository } from 'src/database/schemas/skinStatus/skinStatus.repository';
 import { ServiceStep, ServiceStepSchema } from 'src/database/schemas/serviceStep/serviceStep.schema';
 import { ServiceStepRepository } from 'src/database/schemas/serviceStep/serviceStep.repository';
+import { FileService } from 'src/common/services/file.service';
+import { AccountModule } from '../account/Account.module';
 
 @Module({
   imports: [
@@ -31,7 +33,8 @@ import { ServiceStepRepository } from 'src/database/schemas/serviceStep/serviceS
       { name: ServiceSkinStatus.name, schema: ServiceSkinStatusSchema },    // serviceSkinStatuses
       { name: SkinType.name, schema: SkinTypeSchema },                      // skinTypes
       { name: SkinStatus.name, schema: SkinStatusSchema },                  // skinStatuses
-    ])
+    ]),
+    forwardRef(() => AccountModule),
   ],
   controllers: [ServiceController],
   providers: [
@@ -45,11 +48,20 @@ import { ServiceStepRepository } from 'src/database/schemas/serviceStep/serviceS
     SkinTypeRepository,
     SkinStatusRepository,
 
-    // Services
+    // Inner Services
     ServicesService,
-    SkinService
+    SkinService,
+
+    // Common Services
+    FileService
   ],
   exports: [
+    // Repositories
+    ServiceRepository,
+    ServiceTypeRepository,
+    TherapistServiceRepository,
+
+    // Inner Services
     ServicesService,
     SkinService
   ]

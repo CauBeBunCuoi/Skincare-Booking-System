@@ -1,6 +1,6 @@
 export const DatabaseConfig = () => ({
     mongoDbConfig: {
-        CONNECTION_STRING: process.env.MONGODB_CONNECTION_STRING || 'mongodb://localhost:27017/Skincare_Booking_System_DB',
+        CONNECTION_STRING: process.env.MONGODB_CONNECTION_STRING_REPLICA_SET || 'mongodb://localhost:27017/Skincare_Booking_System_DB',
     }
   });
   

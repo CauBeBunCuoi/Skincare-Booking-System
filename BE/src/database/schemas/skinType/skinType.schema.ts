@@ -20,19 +20,22 @@ interface ISkinType_Virtuals {
 
 }
 
-export type SkinTypeDocument = SkinType & Document & ISkinType_Methods & ISkinType_Virtuals;  
+export type SkinTypeDocument = SkinType & Document & ISkinType_Methods & ISkinType_Virtuals;
 
 
 
 @Schema({ collection: 'skinTypes', timestamps: true })
 export class SkinType {
+    @Prop({ type: Number, required: true })
+    _id?: number;
+
     @Prop({ required: true })
     name: string;
 }
 
 
 
-type SkinTypeModel = Model<SkinTypeDocument> & ISkinType_Statics; 
+type SkinTypeModel = Model<SkinTypeDocument> & ISkinType_Statics;
 const SkinTypeSchema = SchemaFactory.createForClass(SkinType);
 
 // Apply hooks
@@ -51,4 +54,4 @@ apply_Virtuals(SkinTypeSchema);
 // Apply indexes
 apply_Indexes(SkinTypeSchema);
 
-export {SkinTypeSchema, SkinTypeModel}  
+export { SkinTypeSchema, SkinTypeModel }  

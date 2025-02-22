@@ -1,0 +1,220 @@
+[{
+  "_id": {
+    "$oid": "67af5c651d3b85d05e9f88a0"
+  },
+  "serviceTypeId": 1,
+  "name": "Điều trị mụn",
+  "duration": 2,
+  "description": "Điều trị mụn chuyên sâu cho làn da.",
+  "fee": 500000,
+  "isDeleted": false
+},
+{
+  "_id": {
+    "$oid": "67af5c651d3b85d05e9f88a1"
+  },
+  "serviceTypeId": 1,
+  "name": "Điều trị nám",
+  "duration": 5,
+  "description": "Giảm nám da hiệu quả.",
+  "fee": 750000,
+  "isDeleted": false
+},
+{
+  "_id": {
+    "$oid": "67af5c651d3b85d05e9f88a2"
+  },
+  "serviceTypeId": 1,
+  "name": "Điều trị sẹo rỗ",
+  "duration": 3,
+  "description": "Điều trị và làm đầy sẹo rỗ.",
+  "fee": 1000000,
+  "isDeleted": false
+},
+{
+  "_id": {
+    "$oid": "67af5c651d3b85d05e9f88a3"
+  },
+  "serviceTypeId": 1,
+  "name": "Điều trị viêm da",
+  "duration": 2,
+  "description": "Giảm viêm da và dị ứng.",
+  "fee": 600000,
+  "isDeleted": false
+},
+{
+  "_id": {
+    "$oid": "67af5c651d3b85d05e9f88a4"
+  },
+  "serviceTypeId": 1,
+  "name": "Điều trị da khô",
+  "duration": 1,
+  "description": "Dưỡng ẩm và chăm sóc da khô.",
+  "fee": 400000,
+  "isDeleted": false
+},
+{
+  "_id": {
+    "$oid": "67af5c651d3b85d05e9f88a5"
+  },
+  "serviceTypeId": 2,
+  "name": "Điều trị thâm nám",
+  "duration": 1,
+  "description": "Giảm thâm nám và tăng độ sáng cho da.",
+  "fee": 700000,
+  "isDeleted": false
+},
+{
+  "_id": {
+    "$oid": "67af5c651d3b85d05e9f88a6"
+  },
+  "serviceTypeId": 2,
+  "name": "Điều trị lỗ chân lông to",
+  "duration": 2,
+  "description": "Se khít lỗ chân lông và làm mịn da.",
+  "fee": 800000,
+  "isDeleted": false
+},
+{
+  "_id": {
+    "$oid": "67af5c651d3b85d05e9f88a7"
+  },
+  "serviceTypeId": 2,
+  "name": "Điều trị mụn thịt",
+  "duration": 3,
+  "description": "Loại bỏ mụn thịt hiệu quả.",
+  "fee": 600000,
+  "isDeleted": false
+},
+{
+  "_id": {
+    "$oid": "67af5c651d3b85d05e9f88a8"
+  },
+  "serviceTypeId": 2,
+  "name": "Điều trị rạn da",
+  "duration": 4,
+  "description": "Giảm rạn da và làm đều màu da.",
+  "fee": 900000,
+  "isDeleted": false
+},
+{
+  "_id": {
+    "$oid": "67af5c651d3b85d05e9f88a9"
+  },
+  "serviceTypeId": 2,
+  "name": "Điều trị da không đều màu",
+  "duration": 5,
+  "description": "Làm đều màu da và giảm các vùng da tối màu.",
+  "fee": 500000,
+  "isDeleted": false
+},
+{
+  "_id": {
+    "$oid": "67af5c651d3b85d05e9f88aa"
+  },
+  "serviceTypeId": 3,
+  "name": "Chăm sóc da khô và nhạy cảm",
+  "duration": 2,
+  "description": "Dưỡng ẩm và làm dịu da khô, nhạy cảm.",
+  "fee": 550000,
+  "isDeleted": false
+},
+{
+  "_id": {
+    "$oid": "67af5c651d3b85d05e9f88ab"
+  },
+  "serviceTypeId": 3,
+  "name": "Chăm sóc da dầu và mụn",
+  "duration": 1,
+  "description": "Kiểm soát dầu nhờn và ngăn ngừa mụn.",
+  "fee": 650000,
+  "isDeleted": false
+},
+{
+  "_id": {
+    "$oid": "67af5c651d3b85d05e9f88ac"
+  },
+  "serviceTypeId": 3,
+  "name": "Chăm sóc da lão hóa",
+  "duration": 2,
+  "description": "Giảm nếp nhăn và làm săn chắc da.",
+  "fee": 1100000,
+  "isDeleted": false
+},
+{
+  "_id": {
+    "$oid": "67af5c651d3b85d05e9f88ad"
+  },
+  "serviceTypeId": 3,
+  "name": "Chăm sóc da hỗn hợp",
+  "duration": 1,
+  "description": "Cân bằng độ ẩm và dầu nhờn cho da hỗn hợp.",
+  "fee": 600000,
+  "isDeleted": false
+},
+{
+  "_id": {
+    "$oid": "67af5c651d3b85d05e9f88ae"
+  },
+  "serviceTypeId": 3,
+  "name": "Chăm sóc da nhạy cảm",
+  "duration": 1,
+  "description": "Làm dịu và bảo vệ da nhạy cảm.",
+  "fee": 500000,
+  "isDeleted": false
+},
+{
+  "_id": {
+    "$oid": "67af5c651d3b85d05e9f88af"
+  },
+  "serviceTypeId": 4,
+  "name": "Điều trị sẹo bằng laser",
+  "duration": 1,
+  "description": "Xóa sẹo hiệu quả bằng laser.",
+  "fee": 1200000,
+  "isDeleted": false
+},
+{
+  "_id": {
+    "$oid": "67af5c651d3b85d05e9f88b0"
+  },
+  "serviceTypeId": 4,
+  "name": "Điều trị tàn nhang bằng công nghệ cao",
+  "duration": 2,
+  "description": "Giảm tàn nhang với công nghệ tiên tiến.",
+  "fee": 1300000,
+  "isDeleted": false
+},
+{
+  "_id": {
+    "$oid": "67af5c651d3b85d05e9f88b1"
+  },
+  "serviceTypeId": 4,
+  "name": "Trẻ hóa da bằng laser",
+  "duration": 3,
+  "description": "Trẻ hóa làn da bằng phương pháp laser.",
+  "fee": 1500000,
+  "isDeleted": false
+},
+{
+  "_id": {
+    "$oid": "67af5c651d3b85d05e9f88b2"
+  },
+  "serviceTypeId": 4,
+  "name": "Xóa nếp nhăn bằng laser",
+  "duration": 2,
+  "description": "Giảm nếp nhăn hiệu quả bằng laser.",
+  "fee": 1400000,
+  "isDeleted": false
+},
+{
+  "_id": {
+    "$oid": "67af5c651d3b85d05e9f88b3"
+  },
+  "serviceTypeId": 4,
+  "name": "Điều trị đốm nâu bằng công nghệ cao",
+  "duration": 1,
+  "description": "Xóa đốm nâu và làm sáng da bằng công nghệ tiên tiến.",
+  "fee": 1350000,
+  "isDeleted": false
+}]

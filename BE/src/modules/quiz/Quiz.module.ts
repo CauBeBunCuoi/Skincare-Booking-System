@@ -8,6 +8,8 @@ import { QuizService } from './services/quiz.service';
 import { QuizQuestionRepository } from 'src/database/schemas/quizQuestion/quizQuestion.repository';
 import { QuizOptionRepository } from 'src/database/schemas/quizOption/quizOption.repository';
 import { QuizOptionServiceRepository } from 'src/database/schemas/quizOptionService/quizOptionService.repository';
+import { ServiceModule } from '../service/Service.module';
+import { FileService } from 'src/common/services/file.service';
 
 @Module({
   imports: [
@@ -15,7 +17,8 @@ import { QuizOptionServiceRepository } from 'src/database/schemas/quizOptionServ
       { name: QuizQuestion.name, schema: QuizQuestionSchema },              // quizQuestions
       { name: QuizOption.name, schema: QuizOptionSchema },                  // quizOptions
       { name: QuizOptionService.name, schema: QuizOptionServiceSchema },    // quizOptionServices
-    ])
+    ]),
+    ServiceModule
   ],
   controllers: [QuizController],
   providers: [
@@ -24,10 +27,14 @@ import { QuizOptionServiceRepository } from 'src/database/schemas/quizOptionServ
     QuizOptionRepository,
     QuizOptionServiceRepository,
 
-    // Services
-    QuizService
+    // Inner Services
+    QuizService,
+
+    // Common Services
+    FileService,
   ],
   exports: [
+    // Inner Services
     QuizService
   ]
 })

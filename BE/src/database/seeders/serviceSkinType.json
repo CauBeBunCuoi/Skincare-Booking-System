@@ -1,0 +1,29 @@
+[
+    {
+        "_id": {
+            "$oid": "67af5c651d3b85d05e9f8801"
+        },
+        "serviceId": {
+            "$oid": "67af5c651d3b85d05e9f88a0"
+        },
+        "skinId": 1
+    },
+    {
+        "_id": {
+            "$oid": "67af5c651d3b85d05e9f8802"
+        },
+        "serviceId": {
+            "$oid": "67af5c651d3b85d05e9f88a0"
+        },
+        "skinId": 3
+    },
+    {
+        "_id": {
+            "$oid": "67af5c651d3b85d05e9f8803"
+        },
+        "serviceId": {
+            "$oid": "67af5c651d3b85d05e9f88a1"
+        },
+        "skinId": 5
+    }
+]

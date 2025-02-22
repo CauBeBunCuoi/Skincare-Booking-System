@@ -1,0 +1,32 @@
+[
+    {
+        "_id": {
+            "$oid": "67af60000000000000000001"
+        },
+        "content": "Loại da của bạn thuộc nhóm nào?"
+    },
+    {
+        "_id": {
+            "$oid": "67af60000000000000000002"
+        },
+        "content": "Bạn gặp vấn đề gì với làn da của mình?"
+    },
+    {
+        "_id": {
+            "$oid": "67af60000000000000000003"
+        },
+        "content": "Bạn quan tâm đến phương pháp điều trị nào?"
+    },
+    {
+        "_id": {
+            "$oid": "67af60000000000000000004"
+        },
+        "content": "Bạn có từng sử dụng phương pháp điều trị nào dưới đây không?"
+    },
+    {
+        "_id": {
+            "$oid": "67af60000000000000000005"
+        },
+        "content": "Bạn mong muốn kết quả điều trị như thế nào?"
+    }
+]

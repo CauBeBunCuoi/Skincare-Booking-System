@@ -26,11 +26,20 @@ export type ServiceStepDocument = ServiceStep & Document & IServiceStep_Methods 
 
 @Schema({ collection: 'serviceSteps', timestamps: true })
 export class ServiceStep {
+  _id?: Types.ObjectId;
+
   @Prop({ type: Types.ObjectId, ref: 'Service', required: true })
   serviceId: Types.ObjectId;
 
+  @Prop({ required: true })
+  name: string
+
+  @Prop({ required: true })
+  stepOrder: number;
+
   @Prop()
   description: string;
+
 }
 
 

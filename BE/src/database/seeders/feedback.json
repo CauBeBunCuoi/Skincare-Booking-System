@@ -1,0 +1,34 @@
+[{
+  "_id": {
+    "$oid": "67b30ad081e83fbb4e8a39da"
+  },
+  "bookingId": {
+    "$oid": "67b0406a1d3b85d05e9f88d1"
+  },
+  "feedbackContent": "dịch vụ như lồn",
+  "rate": 5,
+  "createdAt": {
+    "$date": "2025-02-17T10:09:20.082Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T10:09:20.082Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b30b01f64269114217d039"
+  },
+  "bookingId": {
+    "$oid": "67b0406a1d3b85d05e9f88d3"
+  },
+  "feedbackContent": "dịch vụ như cặc",
+  "rate": 5,
+  "createdAt": {
+    "$date": "2025-02-17T10:10:09.122Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T10:10:09.122Z"
+  },
+  "__v": 0
+}]

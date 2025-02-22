@@ -20,22 +20,25 @@ interface IWorkShift_Virtuals {
 
 }
 
-export type WorkShiftDocument = WorkShift & Document & IWorkShift_Methods & IWorkShift_Virtuals;  
+export type WorkShiftDocument = WorkShift & Document & IWorkShift_Methods & IWorkShift_Virtuals;
 
 
 
 @Schema({ collection: 'workShifts', timestamps: true })
 export class WorkShift {
+    @Prop({ type: Number, required: true })
+    _id?: number;
+
     @Prop({ required: true })
     startHour: string;
-  
+
     @Prop({ required: true })
     endHour: string;
 }
 
 
 
-type WorkShiftModel = Model<WorkShiftDocument> & IWorkShift_Statics; 
+type WorkShiftModel = Model<WorkShiftDocument> & IWorkShift_Statics;
 const WorkShiftSchema = SchemaFactory.createForClass(WorkShift);
 
 // Apply hooks
@@ -54,4 +57,4 @@ apply_Virtuals(WorkShiftSchema);
 // Apply indexes
 apply_Indexes(WorkShiftSchema);
 
-export {WorkShiftSchema, WorkShiftModel}  
+export { WorkShiftSchema, WorkShiftModel }  

@@ -26,6 +26,8 @@ export type TherapistServiceDocument = TherapistService & Document & ITherapistS
 
 @Schema({ collection: 'therapistServices', timestamps: true })
 export class TherapistService {
+    _id?: Types.ObjectId;
+
     @Prop({ type: Types.ObjectId, ref: 'Account', required: true })
     accountId: Types.ObjectId;
   

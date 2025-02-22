@@ -26,6 +26,8 @@ export type TherapistBackgroundDocument = TherapistBackground & Document & ITher
 
 @Schema({ collection: 'therapistBackgrounds', timestamps: true })
 export class TherapistBackground {
+    _id?: Types.ObjectId;
+
     @Prop({ type: Types.ObjectId, ref: 'Account', required: true })
     accountId: Types.ObjectId;
   

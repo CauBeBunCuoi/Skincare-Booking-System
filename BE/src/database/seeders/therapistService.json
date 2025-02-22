@@ -1,0 +1,38 @@
+[{
+  "_id": {
+    "$oid": "67b07b3765e5f73ee77b06fb"
+  },
+  "accountId": {
+    "$oid": "67b09c974b0a70299990bfb5"
+  },
+  "serviceId": {
+    "$oid": "67af5c651d3b85d05e9f88a2"
+  },
+  "experienceYears": 5,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-15T11:32:07.084Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-15T11:32:07.084Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "67b07b3765e5f73ee77b06fc"
+  },
+  "accountId": {
+    "$oid": "67b09c604b0a70299990bfac"
+  },
+  "serviceId": {
+    "$oid": "67af5c651d3b85d05e9f88a2"
+  },
+  "experienceYears": 7,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-15T11:32:07.085Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-15T11:32:07.085Z"
+  }
+}]

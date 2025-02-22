@@ -26,6 +26,8 @@ export type RestScheduleDocument = RestSchedule & Document & IRestSchedule_Metho
 
 @Schema({ collection: 'restSchedules', timestamps: true })
 export class RestSchedule {
+    _id?: Types.ObjectId;
+
     @Prop({ type: Types.ObjectId, ref: 'Account', required: true })
     accountId: Types.ObjectId;
   

@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { ExecutionResult, ExecutionResultModel } from "./executionResult.schema";
-import { ObjectId } from "mongoose";
+import { Types } from "mongoose";
 
 @Injectable()
 export class ExecutionResultRepository {
@@ -11,6 +11,10 @@ export class ExecutionResultRepository {
 
   async findById(id: any): Promise<ExecutionResult | null> {
     return this.executionResultModel.findById(id).exec();
+  }
+
+  async findByBookingId(bookingId: Types.ObjectId): Promise<ExecutionResult | null> {
+    return this.executionResultModel.findOne({ bookingId: new Types.ObjectId(bookingId) }).exec();
   }
 
   async findAll(): Promise<ExecutionResult[]> {

@@ -1,0 +1,76 @@
+[{
+  "_id": {
+    "$oid": "67b09c254b0a70299990bfa8"
+  },
+  "username": "a999",
+  "password": "$2b$10$L7CcuS1E9HyrbcZWQEbHLuR/M9feVNhzr81Wy627aBTqd8HKcREYu",
+  "roleId": 3,
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2025-02-15T13:52:37.044Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-15T13:52:37.044Z"
+  },
+  "__v": 0,
+  "email": null,
+  "fullName": null,
+  "phoneNumber": null
+},
+{
+  "_id": {
+    "$oid": "67b09c604b0a70299990bfac"
+  },
+  "username": "a88",
+  "password": "$2b$10$QmPpqehOYbHeWGWK0m0mL.wLRe4uXUYiQJzmyLArdYzQiTOJhiaUW",
+  "phoneNumber": 123123123123,
+  "email": "hanguyenhao.20april@gmail.com",
+  "roleId": 3,
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2025-02-15T13:53:36.585Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-15T13:53:36.585Z"
+  },
+  "__v": 0,
+  "fullName": null
+},
+{
+  "_id": {
+    "$oid": "67b09c974b0a70299990bfb5"
+  },
+  "username": "b",
+  "password": "$2b$10$xkhJVLO7cG/8P7PWDaxp7uZbcvsUAaZpy2xwv1KO6jsYJhMQ7kuIC",
+  "phoneNumber": 123123123123,
+  "email": "hanguyenhaoo.20april@gmail.com",
+  "roleId": 3,
+  "fullName": "Bác sĩ đây nè",
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2025-02-15T13:54:31.416Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-15T13:54:31.416Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b0a414447883e5fa80f8b2"
+  },
+  "username": "bb",
+  "password": "$2b$10$xsVCudTMPYBWWBtP7TGqqeD0.XtpCAUK5..V58TMfSCPxCIzXKVEG",
+  "phoneNumber": 123123123123,
+  "email": "hanguyenhaooo.20april@gmail.com",
+  "roleId": 1,
+  "fullName": "Hào nè",
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2025-02-15T14:26:28.630Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-15T14:26:28.630Z"
+  },
+  "__v": 0
+}]
