@@ -35,6 +35,7 @@ import { AccountModule } from '../account/Account.module';
       { name: SkinStatus.name, schema: SkinStatusSchema },                  // skinStatuses
     ]),
     forwardRef(() => AccountModule),
+    
   ],
   controllers: [ServiceController],
   providers: [
