@@ -34,7 +34,7 @@ async function bootstrap() {
 
   await app.listen(port);
   console.log(`Application is running on: ${baseUrl}`);
-  console.log(configService.get<string>('mongoDbConfig.CONNECTION_STRING'))
+  console.log("MongoDB connected: "+ configService.get<string>('mongoDbConfig.CONNECTION_STRING'))
 
 }
 bootstrap();
