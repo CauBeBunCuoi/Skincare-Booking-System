@@ -5,6 +5,7 @@ import { Home } from "./pages/Home";
 import DoctorList from "./pages/DoctorList";
 import AboutUs from "./pages/AboutUs";
 import Admin from "./pages/Admin";
+import Staff from "./pages/Staff";
 
 function App() {
   const router = createBrowserRouter([
@@ -26,7 +27,11 @@ function App() {
     },
     {
       path: "/admin",
-      element: <Admin /> 
+      element: <Admin />
+    },
+    {
+      path: "/staff",
+      element: <Staff />
     }
   ]);
   return <RouterProvider router={router}></RouterProvider>;

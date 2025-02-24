@@ -11,9 +11,9 @@ const AppContextProvider = (props) => {
   );
   const [userData, setUserData] = useState(false);
 
-  const getDoctorsData = () => {};
+  const getDoctorsData = () => { };
 
-  const loadUserProfileData = () => {};
+  const loadUserProfileData = () => { };
 
   const value = {
     doctors,
