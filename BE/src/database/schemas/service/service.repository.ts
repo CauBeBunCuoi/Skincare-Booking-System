@@ -17,6 +17,10 @@ export class ServiceRepository {
     return this.serviceModel.find({ serviceTypeId }).exec();
   }
 
+  async countServiceByServiceTypeId(serviceTypeId: number): Promise<number> {
+    return this.serviceModel.countDocuments({ serviceTypeId }).exec();
+  }
+
   async findAll(): Promise<Service[]> {
     return this.serviceModel.find().lean().exec();
   }

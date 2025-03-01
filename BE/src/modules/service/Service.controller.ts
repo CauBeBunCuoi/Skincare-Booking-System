@@ -21,8 +21,17 @@ export class ServiceController {
     }
   }
 
+  // Lấy danh sách service type
+  @Get("service-types")
+  async getServiceTypes() {
+    return {
+      serviceTypes: await this.servicesService.getServiceTypes()
+    }
+  }
+
+
   // Thêm service type 
-  @Post("service-types")
+  @Post("Thêm service type-types")
   async addServiceType(
     @Body() body: ServiceType
   ) {

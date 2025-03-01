@@ -5,7 +5,7 @@ import { JwtCheckGuard_With_Option } from 'src/common/guards/Auth/JwtCheckGuard_
 import { DateTime } from 'luxon';
 
 @Controller('bookings')
-// @UseGuards(JwtCheckGuard_With_Option('public_private'))
+@UseGuards(JwtCheckGuard_With_Option('public_private'))
 export class BookingController {
 
   constructor(
