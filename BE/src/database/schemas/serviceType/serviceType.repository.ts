@@ -18,7 +18,7 @@ export class ServiceTypeRepository {
   }
 
   async findAll(): Promise<ServiceType[]> {
-    return this.serviceTypeModel.find().exec();
+    return this.serviceTypeModel.find().lean().exec();
   }
 
   async create(serviceType: ServiceType, session: ClientSession): Promise<ServiceType> {

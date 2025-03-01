@@ -14,6 +14,7 @@ import { ServiceModule } from '../service/Service.module';
 import { AccountModule } from '../account/Account.module';
 import { WorkShift, WorkShiftSchema } from 'src/database/schemas/workShift/workShift.schema';
 import { FileService } from 'src/common/services/file.service';
+import { JwtService } from 'src/common/services/jwt.service';
 
 @Module({
   imports: [
@@ -40,7 +41,8 @@ import { FileService } from 'src/common/services/file.service';
     BookingsService,
 
     // Common Services
-    FileService
+    FileService,
+    JwtService
   ],
   exports: [
     // Repositories

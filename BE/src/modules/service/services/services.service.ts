@@ -178,27 +178,86 @@ export class ServicesService {
     async filterServices(skinTypes: number[], skinStatuses: number[], serviceTypeId: number): Promise<any> {
 
         try {
-            const serviceSkinTypes = await this.serviceSkinTypeRepository.findBySkinTypeIds(skinTypes);
-            const serviceSkinStatuses = await this.serviceSkinStatusRepository.findBySkinStatusIds(skinStatuses);
-            console.log(serviceSkinTypes);
-            console.log(serviceSkinStatuses);
-
-            const serviceIds = serviceSkinTypes
-                .map(serviceSkinType => serviceSkinType.serviceId)
-                .filter(serviceId => serviceSkinStatuses
-                    .map(serviceSkinStatus => serviceSkinStatus.serviceId)
-                    .some(abc => abc.equals(serviceId)));
-
-            const servicesIdsByServiceType = await Promise.all(serviceIds.map(async serviceId => {
-                const service = await this.serviceRepository.findById(serviceId);
-                return service.serviceTypeId === serviceTypeId ? service : null;
-            }));
-            return await Promise.all((servicesIdsByServiceType.filter(service => service !== null)).map(async service => {
-                return {
-                    ...service,
-                    imageUrl: await this.fileService.getImageUrl(this.configService.get<string>('imagePathConfig.SERVICE_IMAGE_PATH'), service._id, "main")
+            var serviceSkinTypes = null;
+            var serviceSkinStatuses = null;
+            if (skinTypes.length === 0 && skinStatuses.length === 0) {
+                return (await this.serviceRepository.findByServiceTypeId(serviceTypeId)).map(async service => {
+                    return {
+                        ...service,
+                        imageUrl: await this.fileService.getImageUrl(this.configService.get<string>('imagePathConfig.SERVICE_IMAGE_PATH'), service._id, "main")
+                    }
+                });
+            } else {
+                if (skinTypes.length === 0 && skinStatuses.length !== 0) {
+                    serviceSkinStatuses = await this.serviceSkinStatusRepository.findBySkinStatusIds(skinStatuses);
+                    const serviceIds = serviceSkinStatuses.map(serviceSkinStatus => serviceSkinStatus.serviceId);
+                    const servicesIdsByServiceType = await Promise.all(serviceIds.map(async serviceId => {
+                        const service = await this.serviceRepository.findById(serviceId);
+                        return service.serviceTypeId === serviceTypeId ? service : null;
+                    }));
+                    return await Promise.all((servicesIdsByServiceType.filter(service => service !== null)).map(async service => {
+                        return {
+                            ...service,
+                            imageUrl: await this.fileService.getImageUrl(this.configService.get<string>('imagePathConfig.SERVICE_IMAGE_PATH'), service._id, "main")
+                        }
+                    }));
                 }
-            }));
+                if (skinTypes.length !== 0 && skinStatuses.length === 0) {
+                    serviceSkinTypes = await this.serviceSkinTypeRepository.findBySkinTypeIds(skinTypes);
+                    const serviceIds = serviceSkinTypes.map(serviceSkinType => serviceSkinType.serviceId);
+                    const servicesIdsByServiceType = await Promise.all(serviceIds.map(async serviceId => {
+                        const service = await this.serviceRepository.findById(serviceId);
+                        return service.serviceTypeId === serviceTypeId ? service : null;
+                    }));
+                    return await Promise.all((servicesIdsByServiceType.filter(service => service !== null)).map(async service => {
+                        return {
+                            ...service,
+                            imageUrl: await this.fileService.getImageUrl(this.configService.get<string>('imagePathConfig.SERVICE_IMAGE_PATH'), service._id, "main")
+                        }
+                    }));
+                }
+
+                serviceSkinTypes = await this.serviceSkinTypeRepository.findBySkinTypeIds(skinTypes);
+                serviceSkinStatuses = await this.serviceSkinStatusRepository.findBySkinStatusIds(skinStatuses);
+                const serviceIds = serviceSkinTypes
+                    .map(serviceSkinType => serviceSkinType.serviceId)
+                    .filter(serviceId => serviceSkinStatuses
+                        .map(serviceSkinStatus => serviceSkinStatus.serviceId)
+                        .some(abc => abc.equals(serviceId)));
+
+                const servicesIdsByServiceType = await Promise.all(serviceIds.map(async serviceId => {
+                    const service = await this.serviceRepository.findById(serviceId);
+                    return service.serviceTypeId === serviceTypeId ? service : null;
+                }));
+                return await Promise.all((servicesIdsByServiceType.filter(service => service !== null)).map(async service => {
+                    return {
+                        ...service,
+                        imageUrl: await this.fileService.getImageUrl(this.configService.get<string>('imagePathConfig.SERVICE_IMAGE_PATH'), service._id, "main")
+                    }
+                }));
+
+            }
+
+
+
+            // const serviceSkinStatuses = await this.serviceSkinStatusRepository.findBySkinStatusIds(skinStatuses);
+
+            // const serviceIds = serviceSkinTypes
+            //     .map(serviceSkinType => serviceSkinType.serviceId)
+            //     .filter(serviceId => serviceSkinStatuses
+            //         .map(serviceSkinStatus => serviceSkinStatus.serviceId)
+            //         .some(abc => abc.equals(serviceId)));
+
+            // const servicesIdsByServiceType = await Promise.all(serviceIds.map(async serviceId => {
+            //     const service = await this.serviceRepository.findById(serviceId);
+            //     return service.serviceTypeId === serviceTypeId ? service : null;
+            // }));
+            // return await Promise.all((servicesIdsByServiceType.filter(service => service !== null)).map(async service => {
+            //     return {
+            //         ...service,
+            //         imageUrl: await this.fileService.getImageUrl(this.configService.get<string>('imagePathConfig.SERVICE_IMAGE_PATH'), service._id, "main")
+            //     }
+            // }));
         } catch (error) {
             console.log(error);
             throw new HttpException('Filter services failed', HttpStatus.INTERNAL_SERVER_ERROR);
@@ -219,7 +278,7 @@ export class ServicesService {
             const steps = await this.serviceStepRepository.findByServiceId(new Types.ObjectId(serviceId));
             const serviceSkinTypes = await this.serviceSkinTypeRepository.findByServiceId(new Types.ObjectId(serviceId));
             const serviceSkinStatuses = await this.serviceSkinStatusRepository.findByServiceId(new Types.ObjectId(serviceId));
-            const therapists = await Promise.all(( await this.therapistServiceRepository.findByServiceId(new Types.ObjectId(serviceId))).map( async therapistService => {
+            const therapists = await Promise.all((await this.therapistServiceRepository.findByServiceId(new Types.ObjectId(serviceId))).map(async therapistService => {
                 const therapist = await this.accountRepository.findById(therapistService.accountId);
                 return {
                     _id: therapist._id,
@@ -232,23 +291,23 @@ export class ServicesService {
                 }
             }));
             return {
-                service:{
+                service: {
                     ...service,
                     imageUrl: await this.fileService.getImageUrl(this.configService.get<string>('imagePathConfig.SERVICE_IMAGE_PATH'), serviceId, "main")
                 },
-                steps : await Promise.all(steps.map(async step => {
+                steps: await Promise.all(steps.map(async step => {
                     return {
                         ...step,
                         imageUrl: await this.fileService.getImageUrl(this.configService.get<string>('imagePathConfig.SERVICE_IMAGE_PATH'), serviceId, step.stepOrder.toString())
                     }
                 })),
-                skinTypes : await Promise.all(serviceSkinTypes.map(async skinType => {
+                skinTypes: await Promise.all(serviceSkinTypes.map(async skinType => {
                     return await this.skinTypeRepository.findById(skinType.skinId);
                 })),
                 skinStatuses: await Promise.all(serviceSkinStatuses.map(async skinStatus => {
                     return await this.skinStatusRepository.findById(skinStatus.statusId);
                 })),
-                therapists : therapists.filter(therapist => therapist.isDeleted === false)
+                therapists: therapists.filter(therapist => therapist.isDeleted === false)
 
             }
         } catch (error) {
@@ -363,6 +422,18 @@ export class ServicesService {
         } finally {
             session.endSession();
         }
+    }
+
+    async getServiceTypes(): Promise<any> {
+        const serviceTypes = await this.serviceTypeRepository.findAll();
+
+        return await Promise.all(serviceTypes.map(async serviceType => {
+            return {
+                ...serviceType,
+                servicesCount: await this.serviceRepository.countServiceByServiceTypeId(serviceType._id)
+            }
+        }
+        ));
     }
 
 
