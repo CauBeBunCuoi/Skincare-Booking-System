@@ -4,8 +4,6 @@ import { TherapistAccountsService } from './services/therapistAccounts.service';
 import { HttpExceptionFilter } from 'src/common/filters/HttpException.filter';
 import { get, Types } from 'mongoose';
 import { Account } from 'src/database/schemas/account/account.schema';
-import { TherapistService } from 'src/database/schemas/therapistService/therapistService.schema';
-import { FileInterceptor } from '@nestjs/platform-express';
 import { ConfigService } from '@nestjs/config';
 import { FileService } from 'src/common/services/file.service';
 

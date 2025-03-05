@@ -6,8 +6,11 @@ import { join } from 'path';
 import { JwtConfig } from 'src/config/jwt.config';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from 'src/common/services/jwt.service';
+import e from 'express';
 
-export function JwtCheckGuard_With_Option(option: string): Type<CanActivate> {
+export function JwtCheckGuard_With_Option(
+  option: "secret" | "public_private",
+): Type<CanActivate> {
   @Injectable()
   class Guard implements CanActivate {
     constructor(
@@ -17,55 +20,25 @@ export function JwtCheckGuard_With_Option(option: string): Type<CanActivate> {
 
     canActivate(context: ExecutionContext): boolean {
       const request = context.switchToHttp().getRequest();
-      var token = null;
-      try {
-        token = this.jwtService.extractAuthorizationHeaderToken(request);
-      } catch (err) {
-        return false;
+
+      const authorizationHeader = request.headers['authorization'];
+      var token = authorizationHeader ? authorizationHeader.replace('Bearer ', '') : null;
+
+
+      if (token) {
+        if (option === 'secret') {
+          request.user = this.jwtService.decodeToken_OneSecretKey(token);
+          return true;
+        } else if (option === 'public_private') {
+          request.user = this.jwtService.decodeToken_TwoPublicPrivateKey(token);
+          return true;
+        } 
       }
 
-      if (option === 'secret') {
-        request.user= this.jwtService.decodeToken_OneSecretKey(token);
-      } else if (option === 'public_private') {
-        request.user= this.jwtService.decodeToken_TwoPublicPrivateKey(token);
-      } else {
-        return false;
-      }
+      request.user = null;
       return true;
 
     }
-
-    // private extractAuthorizationHeaderToken(request: any): string {
-    //   const authorizationHeader = request.headers['authorization'];
-    //   if (!authorizationHeader) {
-    //     throw new UnauthorizedException('Authorization header is missing');
-    //   }
-    //   if (!authorizationHeader.startsWith('Bearer ')) {
-    //     throw new UnauthorizedException('Invalid authorization header format');
-    //   }
-    //   return authorizationHeader.replace('Bearer ', '');
-    // }
-
-    // private decodeToken_OneSecretKey(token: string): any {
-    //   try {
-    //     const decoded = jwt.verify(token, JwtConfig.SECRET);
-    //     return decoded;
-    //   } catch (err) {
-    //     throw new UnauthorizedException('Invalid token');
-    //   }
-    // }
-
-    // private decodeToken_TwoPublicPrivateKey(token: string): any {
-    //   try {
-    //     const publicKey = fs.readFileSync(join(process.cwd(), JwtConfig.PUBLIC_KEY_PATH)).toString();
-    //     const decoded = jwt.verify(token, publicKey, {
-    //       algorithms: ['RS256'],
-    //     });
-    //     return decoded;
-    //   } catch (err) {
-    //     throw new UnauthorizedException('Invalid token');
-    //   }
-    // }
   }
   return mixin(Guard);
 
