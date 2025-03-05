@@ -13,7 +13,6 @@ import { Types } from 'mongoose';
 import { join } from 'path';
 import { promises as fs } from 'fs';
 import { ConfigService } from '@nestjs/config';
-import { BCRYPTConfig } from 'src/config/bcrypt.config';
 import { FileService } from 'src/common/services/file.service';
 
 @Injectable()
