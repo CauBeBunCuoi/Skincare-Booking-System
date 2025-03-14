@@ -72,8 +72,10 @@ export class BookingController {
     @Param('serviceId') serviceId: Types.ObjectId,
     @Param('accountId') accountId: Types.ObjectId
   ) {
+    const schedules = await this.bookingsService.getScheduleByTherapistId(serviceId, accountId);
     return {
-      schedules: await this.bookingsService.getScheduleByTherapistId(serviceId, accountId)
+      schedules: schedules.schedules,
+      availableTherapists: schedules.availableTherapists
     }
   }
 

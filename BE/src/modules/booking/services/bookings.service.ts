@@ -234,7 +234,7 @@ export class BookingsService {
                 isAssigned: booking.isAssigned,
                 assignedTherapistId: booking.assignedTherapistId ? new Types.ObjectId(booking.assignedTherapistId) : null,
                 extraFee: 0,
-                totalFee: 0,
+                totalFee: service.fee,
                 hasPaid: false,
                 cancelReason: null
             })
@@ -481,9 +481,14 @@ export class BookingsService {
 
     async getScheduleByTherapistId(serviceId: Types.ObjectId, therapistId: Types.ObjectId,): Promise<any> {
         try {
-            const therapistFreeSchedules = (await this.getAllSchedule(serviceId)).therapistFreeSchedules;
+            const allSchedules = await this.getAllSchedule(serviceId);
+            const therapistFreeSchedules = allSchedules.therapistFreeSchedules;
             const therapistFreeSchedule = therapistFreeSchedules.find(therapist => therapist.therapistId.equals(therapistId));
-            return therapistFreeSchedule.freeSchedules;
+            return {
+                schedules: therapistFreeSchedule.freeSchedules,
+                availableTherapists: allSchedules.availableTherapists
+                
+            };
 
         } catch (error) {
             console.log(error);

@@ -14,7 +14,7 @@ export class ServiceRepository {
   }
 
   async findByServiceTypeId(serviceTypeId: number): Promise<Service[]> {
-    return this.serviceModel.find({ serviceTypeId }).exec();
+    return this.serviceModel.find({ serviceTypeId }).lean().exec();
   }
 
   async countServiceByServiceTypeId(serviceTypeId: number): Promise<number> {
@@ -32,6 +32,7 @@ export class ServiceRepository {
   async update(service: Service, session: ClientSession): Promise<Service | null> {
     return this.serviceModel.findByIdAndUpdate(service._id, service, { new: true, session }).exec();
   }
+
 
   async delete(id: Types.ObjectId, session: ClientSession): Promise<Service | null> {
     return this.serviceModel.findByIdAndUpdate(id, { isDeleted: true }, { new: true, session }).exec();

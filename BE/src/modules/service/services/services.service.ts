@@ -176,17 +176,17 @@ export class ServicesService {
     }
 
     async filterServices(skinTypes: number[], skinStatuses: number[], serviceTypeId: number): Promise<any> {
-
         try {
             var serviceSkinTypes = null;
             var serviceSkinStatuses = null;
             if (skinTypes.length === 0 && skinStatuses.length === 0) {
-                return (await this.serviceRepository.findByServiceTypeId(serviceTypeId)).map(async service => {
+                const services = await this.serviceRepository.findByServiceTypeId(serviceTypeId);
+                return await Promise.all(services.map(async service => {
                     return {
                         ...service,
                         imageUrl: await this.fileService.getImageUrl(this.configService.get<string>('imagePathConfig.SERVICE_IMAGE_PATH'), service._id, "main")
                     }
-                });
+                }));
             } else {
                 if (skinTypes.length === 0 && skinStatuses.length !== 0) {
                     serviceSkinStatuses = await this.serviceSkinStatusRepository.findBySkinStatusIds(skinStatuses);
@@ -202,6 +202,7 @@ export class ServicesService {
                         }
                     }));
                 }
+
                 if (skinTypes.length !== 0 && skinStatuses.length === 0) {
                     serviceSkinTypes = await this.serviceSkinTypeRepository.findBySkinTypeIds(skinTypes);
                     const serviceIds = serviceSkinTypes.map(serviceSkinType => serviceSkinType.serviceId);

@@ -1,0 +1,114 @@
+[
+    {
+        "_id": {
+            "$oid": "67af6c559b8434305635737c"
+        },
+        "accountId": {
+            "$oid": "67b09c974b0a70299990bfb5"
+        },
+        "description": "tốt nghiệp trường đời",
+        "__v": 0,
+        "createdAt": {
+            "$date": "2025-02-14T16:16:21.466Z"
+        },
+        "updatedAt": {
+            "$date": "2025-02-14T16:16:21.466Z"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67c01c559b8434305635737d"
+        },
+        "accountId": {
+            "$oid": "67b09c974b0a70299990bfb5"
+        },
+        "description": "#Con trai SATAN, Chúa tể của địa ngục",
+        "__v": 0,
+        "createdAt": {
+            "$date": "2025-02-14T16:16:21.466Z"
+        },
+        "updatedAt": {
+            "$date": "2025-02-14T16:16:21.466Z"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67c01c559b8434305635737f"
+        },
+        "accountId": {
+            "$oid": "67b09c974b0a70299990bfb5"
+        },
+        "description": "@Gặp tôi, bạn sẽ không bao giờ muốn gặp ai khác, vì tôi là người duy nhất có thể giết chết bạn mà không cần sử dụng vũ khí",
+        "__v": 0,
+        "createdAt": {
+            "$date": "2025-02-14T16:16:21.466Z"
+        },
+        "updatedAt": {
+            "$date": "2025-02-14T16:16:21.466Z"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67af6c559b8434305635737e"
+        },
+        "accountId": {
+            "$oid": "67b09c974b0a70299990bfb5"
+        },
+        "description": "chiến thần trải đời",
+        "__v": 0,
+        "createdAt": {
+            "$date": "2025-02-14T16:16:21.467Z"
+        },
+        "updatedAt": {
+            "$date": "2025-02-14T16:16:21.467Z"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67b07c1365e5f73ee77b0703"
+        },
+        "accountId": {
+            "$oid": "67b09c974b0a70299990bfb5"
+        },
+        "description": "tốt nghiệp trường đời",
+        "__v": 0,
+        "createdAt": {
+            "$date": "2025-02-15T11:35:47.610Z"
+        },
+        "updatedAt": {
+            "$date": "2025-02-15T11:35:47.610Z"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67b07c1365e5f73ee77b0704"
+        },
+        "accountId": {
+            "$oid": "67b09c974b0a70299990bfb5"
+        },
+        "description": "đi lên từ bàn tay trắng",
+        "__v": 0,
+        "createdAt": {
+            "$date": "2025-02-15T11:35:47.610Z"
+        },
+        "updatedAt": {
+            "$date": "2025-02-15T11:35:47.610Z"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67b07c1365e5f73ee77b0705"
+        },
+        "accountId": {
+            "$oid": "67b09c974b0a70299990bfb5"
+        },
+        "description": "chiến thần trải đời",
+        "__v": 0,
+        "createdAt": {
+            "$date": "2025-02-15T11:35:47.610Z"
+        },
+        "updatedAt": {
+            "$date": "2025-02-15T11:35:47.610Z"
+        }
+    }
+]
