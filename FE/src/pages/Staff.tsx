@@ -18,6 +18,7 @@ import { MdHomeRepairService } from "react-icons/md";
 import { MdDashboardCustomize } from "react-icons/md";
 import { FaCalendarAlt } from "react-icons/fa";
 import StaffManagePatient from "../components/StaffManagePatient";
+import StaffAppointment from "../components/StaffAppointment";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -87,6 +88,9 @@ function Staff() {
             <Box sx={{ flexGrow: 1, height: "100%", overflow: "auto" }}>
                 <TabPanel value={value} index={0}>
                     <StaffManagePatient />
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                    <StaffAppointment />
                 </TabPanel>
             </Box>
         </Box>

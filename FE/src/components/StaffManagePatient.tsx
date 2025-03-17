@@ -50,7 +50,7 @@ const initialPatients: Patient[] = [
 ];
 
 const StaffManagePatient: React.FC = () => {
-    const [patients, setPatients] = useState<Patient[]>(initialPatients);
+    const [patients, setPatients] = useState<Patient[]>(initialPatients)
 
     return (
         <Box sx={{ flexGrow: 1, p: 2 }}>
