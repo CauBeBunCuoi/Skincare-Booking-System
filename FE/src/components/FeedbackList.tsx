@@ -40,7 +40,7 @@ const doctors: Doctor[] = [
     { id: 2, name: "Dr. Emily Carter", image: "https://via.placeholder.com/40" },
 ];
 
-const StaffAppointment: React.FC = () => {
+const FeedbackList: React.FC = () => {
     const [appointments, setAppointments] = useState<Appointment[]>([
         {
             id: 1,
@@ -142,4 +142,4 @@ const StaffAppointment: React.FC = () => {
     );
 };
 
-export default StaffAppointment;
+export default FeedbackList;
