@@ -1,11 +1,14 @@
-import { BadRequestException, Body, Controller, Delete, Get, HttpException, Param, Post, Query, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, HttpException, Param, Post, Query, UseFilters, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ServicesService } from './services/services.service';
 import { SkinService } from './services/skin.service';
 import { ServiceStep } from 'src/database/schemas/serviceStep/serviceStep.schema';
 import { TypeExpressionOperator, Types } from 'mongoose';
 import { ServiceType } from 'src/database/schemas/serviceType/serviceType.schema';
+import { HttpExceptionFilter } from 'src/common/filters/HttpException.filter';
+import { JwtCheckGuard_With_Option } from 'src/common/guards/Auth/JwtCheckGuard_With_Option.guard';
 
 @Controller('services')
+@UseGuards(JwtCheckGuard_With_Option('public_private'))
 export class ServiceController {
 
   constructor(

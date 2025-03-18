@@ -6,9 +6,13 @@ import { get, Types } from 'mongoose';
 import { Account } from 'src/database/schemas/account/account.schema';
 import { ConfigService } from '@nestjs/config';
 import { FileService } from 'src/common/services/file.service';
+import { JwtCheckGuard_With_Option } from 'src/common/guards/Auth/JwtCheckGuard_With_Option.guard';
+import { Roles } from 'src/common/decorators/role.decorator';
+import { RolesGuard } from 'src/common/guards/Auth/RoleGuard.guard';
+import { LoginJwtGuard } from 'src/common/guards/Auth/LoginJwtGuard.guard';
 
 @Controller('accounts')
-@UseFilters(HttpExceptionFilter)
+@UseGuards(JwtCheckGuard_With_Option('public_private'))
 export class AccountController {
 
   constructor(
@@ -27,7 +31,7 @@ export class AccountController {
   ) {
     const token = await this.accountsService.login(body.username, body.password);
     return {
-      "token": "Bearer " + token,
+      "token": token,
       "message": "Login successfully"
     };
   }
@@ -49,6 +53,8 @@ export class AccountController {
 
   // Thêm account mới
   @Post('')
+  @Roles('Manager')
+  @UseGuards(RolesGuard)
   @UsePipes(new ValidationPipe({
     whitelist: true,
   }))
@@ -64,6 +70,8 @@ export class AccountController {
 
   // Lấy danh sách accounts nhân viên
   @Get('staffs')
+  @Roles('Manager')
+  @UseGuards(RolesGuard)
   async getStaff() {
     const accounts = await this.accountsService.getAllStaff();
     return {
@@ -73,6 +81,8 @@ export class AccountController {
 
   // Lấy danh sách accounts khách hàng
   @Get('customers')
+  @Roles('Manager',"Staff")
+  @UseGuards(RolesGuard)
   async getCustomer() {
     const accounts = await this.accountsService.getAllCustomer();
     return {
@@ -82,6 +92,7 @@ export class AccountController {
 
   // Lấy account detail (không gồm danh sách background, service đảm nhiệm và lịch nghỉ)
   @Get(':accountId')
+  @UseGuards(LoginJwtGuard)
   async getAccountById(
     @Param('accountId') accountId: Types.ObjectId
   ) {
@@ -93,6 +104,7 @@ export class AccountController {
 
   // Cập nhật account
   @Post(':accountId')
+  @UseGuards(LoginJwtGuard)
   @UsePipes(new ValidationPipe({
     whitelist: true,
   }))
@@ -109,6 +121,7 @@ export class AccountController {
 
   // Xóa account
   @Delete(':accountId')
+
   async deleteAccountById(
     @Param('accountId') accountId: Types.ObjectId
   ) {

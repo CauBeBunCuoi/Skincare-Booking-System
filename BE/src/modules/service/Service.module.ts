@@ -21,6 +21,7 @@ import { ServiceStep, ServiceStepSchema } from 'src/database/schemas/serviceStep
 import { ServiceStepRepository } from 'src/database/schemas/serviceStep/serviceStep.repository';
 import { FileService } from 'src/common/services/file.service';
 import { AccountModule } from '../account/Account.module';
+import { JwtService } from 'src/common/services/jwt.service';
 
 @Module({
   imports: [
@@ -35,7 +36,7 @@ import { AccountModule } from '../account/Account.module';
       { name: SkinStatus.name, schema: SkinStatusSchema },                  // skinStatuses
     ]),
     forwardRef(() => AccountModule),
-    
+
   ],
   controllers: [ServiceController],
   providers: [
@@ -54,6 +55,7 @@ import { AccountModule } from '../account/Account.module';
     SkinService,
 
     // Common Services
+    JwtService,
     FileService
   ],
   exports: [

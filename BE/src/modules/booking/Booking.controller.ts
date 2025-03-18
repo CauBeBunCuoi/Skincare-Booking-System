@@ -17,6 +17,7 @@ import { BookingsService } from './services/bookings.service';
 import { Types } from 'mongoose';
 import { JwtCheckGuard_With_Option } from 'src/common/guards/Auth/JwtCheckGuard_With_Option.guard';
 import { DateTime } from 'luxon';
+import { HttpExceptionFilter } from 'src/common/filters/HttpException.filter';
 
 @Controller('bookings')
 @UseGuards(JwtCheckGuard_With_Option('public_private'))
