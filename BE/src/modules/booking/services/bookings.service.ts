@@ -17,6 +17,37 @@ import { FileService } from 'src/common/services/file.service';
 import { AccountRepository } from 'src/database/schemas/account/account.repository';
 import { Account } from 'src/database/schemas/account/account.schema';
 
+// STATUS CỦA BOOKING:
+const status = [{
+    "_id": 1,
+    "name": "Mới Tạo"
+},
+{
+    "_id": 2,
+    "name": "Chưa Có Điều Trị Viên"
+},
+{
+    "_id": 3,
+    "name": "Đã Có Điều Trị Viên"
+},
+{
+    "_id": 4,
+    "name": "Khách Đã Check-in"
+},
+{
+    "_id": 5,
+    "name": "Khách Đã Thực Hiện Xong (Confirm bởi Điều Trị Viên)"
+},
+{
+    "_id": 6,
+    "name": "Khách Đã Thanh Toán"
+},
+{
+    "_id": 7,
+    "name": "Đã Huỷ"
+}]
+
+
 @Injectable()
 export class BookingsService {
     constructor(
@@ -224,7 +255,7 @@ export class BookingsService {
             const addedBooking = await this.bookingRepository.create({
                 accountId: new Types.ObjectId(user._id),
                 serviceId: new Types.ObjectId(booking.serviceId),
-                bookStatusId: 1,
+                bookStatusId: booking.assignedTherapistId ? 3 : 2,
                 bookingDate: new Date(),
                 appointmentTime: new Date(booking.appointmentTime),
                 startTime: progress.startTime,
@@ -299,6 +330,36 @@ export class BookingsService {
 
     async getAvailableTherapistsByBooking(bookingId: Types.ObjectId): Promise<any> {
         // tận dụng hàm getAllSchedule để lấy ra danh sách các therapist có thể thực hiện booking
+        const booking = await this.getExistBookingById(bookingId);
+        if (booking.assignedTherapistId) {
+            throw new HttpException('Booking is already assigned', HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        try {
+            var result = []
+            const availableTherapistsByService = await this.therapistServiceRepository.findByServiceId(booking.serviceId);
+            for (const therapist of availableTherapistsByService) {
+                const availableTherapists = await this.getScheduleByTherapistId(booking.serviceId, therapist.accountId);
+                const appointmentDate = booking.appointmentTime.toISOString().split('T')[0];
+                const startTime = this.get_TimeString_ByDate(booking.startTime);
+                console.log("\n\n\n\nappointmentDate", appointmentDate);
+                const availableDates = availableTherapists.schedules.filter(schedule => schedule.date === appointmentDate);
+                var isContainFreeSlot = false;
+
+                for (const date of availableDates) {
+                    if (date.hours.includes(startTime)) {
+                        isContainFreeSlot = true;
+                        break;
+                    }
+                }
+                if (isContainFreeSlot) {
+                    result.push(therapist);
+                }
+            }
+            return result;
+        } catch (error) {
+            console.log(error);
+            throw new HttpException('Get schedule failed', HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     async getAllSchedule(serviceId: Types.ObjectId): Promise<{
@@ -490,7 +551,7 @@ export class BookingsService {
             return {
                 schedules: therapistFreeSchedule.freeSchedules,
                 availableTherapists: allSchedules.availableTherapists
-                
+
             };
 
         } catch (error) {
@@ -519,11 +580,11 @@ export class BookingsService {
         }
     }
 
-    async addExecutionResult(bookingId: Types.ObjectId, executionResult: { 
+    async addExecutionResult(bookingId: Types.ObjectId, executionResult: {
         customerDescription: string,
         treatmentDescription: string,
         therapistRecommend: string
-      }): Promise<any> {
+    }): Promise<any> {
         await this.getExistBookingById(bookingId);
         try {
             await this.executionResultRepository.create({
@@ -532,6 +593,7 @@ export class BookingsService {
                 treatmentDescription: executionResult.treatmentDescription,
                 therapistRecommend: executionResult.therapistRecommend
             })
+            await this.bookingRepository.updateStatus(bookingId, 5)
         } catch (error) {
             console.log(error);
             throw new HttpException('Add execution result failed', HttpStatus.INTERNAL_SERVER_ERROR);
@@ -566,6 +628,7 @@ export class BookingsService {
         await this.getExistBookingById(bookingId);
         try {
             await this.bookingRepository.assignTherapist(bookingId, therapistId);
+            await this.bookingRepository.updateStatus(bookingId, 3);
         } catch (error) {
             console.log(error);
             throw new HttpException('Assign therapist failed', HttpStatus.INTERNAL_SERVER_ERROR);

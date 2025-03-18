@@ -34,6 +34,10 @@ export class BookingRepository {
     return this.bookingModel.findByIdAndUpdate(id, booking, { new: true }).exec();
   }
 
+  async updateStatus(id: Types.ObjectId, status: number): Promise<Booking | null> {
+    return this.bookingModel.findByIdAndUpdate(id, { bookStatusId: status }).exec();
+  }
+
   async assignTherapist(bookingId: Types.ObjectId, therapistId: Types.ObjectId): Promise<Booking | null> {
     return this.bookingModel.findByIdAndUpdate(bookingId, { assignedTherapistId: new Types.ObjectId(therapistId) }).exec();
   }
@@ -45,7 +49,7 @@ export class BookingRepository {
 
   async checkOutBooking(bookingId: Types.ObjectId): Promise<Booking | null> {
     const now = moment().tz("Asia/Ho_Chi_Minh").format("YYYY-MM-DDTHH:mm:ss[Z]");
-    return this.bookingModel.findByIdAndUpdate(bookingId, { checkOutTime: new Date(now), bookStatusId: 5 }).exec();
+    return this.bookingModel.findByIdAndUpdate(bookingId, { checkOutTime: new Date(now), bookStatusId: 6 }).exec();
   }
 
   async delete(id: any): Promise<Booking | null> {
