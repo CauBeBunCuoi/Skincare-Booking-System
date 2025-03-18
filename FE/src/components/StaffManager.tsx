@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
+import LeaveCalendar from "./StaffLeaveSchedule";
 
 type ScheduleItem = {
   title: string;
@@ -111,24 +112,12 @@ const StaffManagement = () => {
           sx={{
             width: "50%",
             margin: "auto",
-            marginTop: "10%",
             backgroundColor: "white",
             padding: 2,
             textAlign: "center",
           }}
         >
-          <Typography variant="h6" gutterBottom>
-            {selectedEmployee?.name}'s Schedule
-          </Typography>
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <FullCalendar
-              plugins={[dayGridPlugin]}
-              initialView="dayGridMonth"
-              events={selectedEmployee?.schedule || []}
-              height="350px"
-              width="100%"
-            />
-          </Box>
+          <LeaveCalendar />
           <Button
             onClick={handleClose}
             variant="contained"
