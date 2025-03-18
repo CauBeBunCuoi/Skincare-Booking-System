@@ -69,7 +69,7 @@ export class AccountsService {
             fullName: account.fullName,
             email: account.email,
             phoneNumber: account.phoneNumber,
-            roleId: account.roleId
+            role: await this.roleRepository.findById(account.roleId),
         }
         const token: string = this.jwtService.generateJWT_TwoPublicPrivateKey(jwt_payload, '1d');
         return token;

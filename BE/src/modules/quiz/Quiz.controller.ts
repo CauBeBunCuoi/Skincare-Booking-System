@@ -1,8 +1,10 @@
 import { BadRequestException, Body, Controller, Delete, Get, HttpException, Param, Post, Query, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { QuizService } from './services/quiz.service';
 import { Types } from 'mongoose';
+import { JwtCheckGuard_With_Option } from 'src/common/guards/Auth/JwtCheckGuard_With_Option.guard';
 
 @Controller('quizzes')
+@UseGuards(JwtCheckGuard_With_Option('public_private'))
 export class QuizController {
 
   constructor(

@@ -10,6 +10,7 @@ import { QuizOptionRepository } from 'src/database/schemas/quizOption/quizOption
 import { QuizOptionServiceRepository } from 'src/database/schemas/quizOptionService/quizOptionService.repository';
 import { ServiceModule } from '../service/Service.module';
 import { FileService } from 'src/common/services/file.service';
+import { JwtService } from 'src/common/services/jwt.service';
 
 @Module({
   imports: [
@@ -31,7 +32,8 @@ import { FileService } from 'src/common/services/file.service';
     QuizService,
 
     // Common Services
-    FileService,
+    JwtService,
+    FileService
   ],
   exports: [
     // Inner Services

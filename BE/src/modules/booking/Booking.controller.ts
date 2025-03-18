@@ -1,8 +1,9 @@
-import { Body, Controller, Get, HttpException, Param, Post, Query, Req, Type, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, Param, Post, Query, Req, Type, UseFilters, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { BookingsService } from './services/bookings.service';
 import { Types } from 'mongoose';
 import { JwtCheckGuard_With_Option } from 'src/common/guards/Auth/JwtCheckGuard_With_Option.guard';
 import { DateTime } from 'luxon';
+import { HttpExceptionFilter } from 'src/common/filters/HttpException.filter';
 
 @Controller('bookings')
 @UseGuards(JwtCheckGuard_With_Option('public_private'))
@@ -54,6 +55,16 @@ export class BookingController {
     return booking
   }
 
+  // Lấy danh sách therapist available cho booking (booking chưa được assignee therapist)
+  @Get(':bookingId/available-therapists')
+  async getAvailableTherapists(
+    @Param('bookingId') bookingId: Types.ObjectId
+  ) {
+    return {
+      availableTherapists: await this.bookingsService.getAvailableTherapistsByBooking(bookingId)
+    }
+  }
+
   // Lấy danh sách lịch không theo therapist nào (trả về mảng các ngày, 1 ngày chứa các giờ available)
   @Get('services/:serviceId/schedules')
   async getAllSchedule(
@@ -96,6 +107,20 @@ export class BookingController {
   ) {
     await this.bookingsService.checkInBooking(bookingId);
     return { message: 'Check-in booking successfully' };
+  }
+
+  // thêm Execution Result cho booking
+  @Post(':bookingId/execution-result')
+  async addExecutionResult(
+    @Param('bookingId') bookingId: Types.ObjectId,
+    @Body() body: { 
+      customerDescription: string,
+      treatmentDescription: string,
+      therapistRecommend: string
+    }
+  ) {
+    await this.bookingsService.addExecutionResult(bookingId, body);
+    return { message: 'Add execution result successfully' };
   }
 
   // Check-out cho booking

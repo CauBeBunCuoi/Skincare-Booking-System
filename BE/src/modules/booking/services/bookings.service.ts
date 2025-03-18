@@ -297,6 +297,9 @@ export class BookingsService {
         }
     }
 
+    async getAvailableTherapistsByBooking(bookingId: Types.ObjectId): Promise<any> {
+        // tận dụng hàm getAllSchedule để lấy ra danh sách các therapist có thể thực hiện booking
+    }
 
     async getAllSchedule(serviceId: Types.ObjectId): Promise<{
         schedules: { date: string, hours: string[] }[],
@@ -513,6 +516,25 @@ export class BookingsService {
         } catch (error) {
             console.log(error);
             throw new HttpException('Check-in booking failed', HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    async addExecutionResult(bookingId: Types.ObjectId, executionResult: { 
+        customerDescription: string,
+        treatmentDescription: string,
+        therapistRecommend: string
+      }): Promise<any> {
+        await this.getExistBookingById(bookingId);
+        try {
+            await this.executionResultRepository.create({
+                bookingId: new Types.ObjectId(bookingId),
+                customerDescription: executionResult.customerDescription,
+                treatmentDescription: executionResult.treatmentDescription,
+                therapistRecommend: executionResult.therapistRecommend
+            })
+        } catch (error) {
+            console.log(error);
+            throw new HttpException('Add execution result failed', HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

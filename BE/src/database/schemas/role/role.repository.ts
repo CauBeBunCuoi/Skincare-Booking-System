@@ -10,7 +10,7 @@ export class RoleRepository {
   ) {}
 
   async findById(id: any): Promise<Role | null> {
-    return this.roleModel.findById(id).exec();
+    return this.roleModel.findById(id).lean().exec();
   }
 
   async findAll(): Promise<Role[]> {
