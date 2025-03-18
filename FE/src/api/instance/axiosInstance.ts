@@ -5,24 +5,22 @@ import { apiBaseUrl } from "../baseUrl";
 import { LocalStorageUtil } from "../../utils/storage.util";
 import { JwtUtil } from "../../utils/jwt.util";
 
-
-
 const publicApi = axios.create({
-  baseURL: apiBaseUrl + '/api',
+  baseURL: apiBaseUrl + "/api",
   timeout: 10000,
 });
 const loginRequiredApi = axios.create({
-  baseURL: apiBaseUrl + '/api',
+  baseURL: apiBaseUrl + "/api",
   timeout: 10000,
 });
 const adminApi = axios.create({
-  baseURL: apiBaseUrl + '/api',
+  baseURL: apiBaseUrl + "/api",
   timeout: 10000,
 });
 
 publicApi.interceptors.request.use(
   (config) => {
-    const token = LocalStorageUtil.getAuthTokenFromPersistLocalStorage();
+    const token = LocalStorageUtil.getAuthTokenFromLocalStorage();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -35,23 +33,21 @@ publicApi.interceptors.request.use(
 
 loginRequiredApi.interceptors.request.use(
   async (config) => {
-    const token = LocalStorageUtil.getAuthTokenFromPersistLocalStorage();
+    const token = LocalStorageUtil.getAuthTokenFromLocalStorage();
 
     if (token) {
       if (JwtUtil.isTokenValid(token) === false) {
-
         //** CHO HIỆN THÔNG BÁO YÊU CẦU ĐĂNG NHẬP
         await loginRequiredAlert();
 
-        return Promise.reject(new Error('Token expired'));
+        return Promise.reject(new Error("Token expired"));
       }
       config.headers.Authorization = `Bearer ${token}`;
     } else {
-
       //** CHO HIỆN THÔNG BÁO YÊU CẦU ĐĂNG NHẬP
       await loginRequiredAlert();
 
-      return Promise.reject(new Error('No token found'));
+      return Promise.reject(new Error("No token found"));
     }
 
     return config;
@@ -63,31 +59,29 @@ loginRequiredApi.interceptors.request.use(
 
 adminApi.interceptors.request.use(
   async (config) => {
-    const token = LocalStorageUtil.getAuthTokenFromPersistLocalStorage();
+    const token = LocalStorageUtil.getAuthTokenFromLocalStorage();
 
     if (token) {
       if (JwtUtil.isTokenValid(token) === false) {
-
         //** CHO HIỆN THÔNG BÁO YÊU CẦU ĐĂNG NHẬP
         await loginRequiredAlert();
 
-        return Promise.reject(new Error('Token expired'));
+        return Promise.reject(new Error("Token expired"));
       }
       const user = JwtUtil.decodeToken(token);
 
       if (user.role.id != 2 && user.role.id != 3 && user.role.id != 4) {
         //** CHO HIỆN THÔNG BÁO YÊU CẦU ĐĂNG NHẬP
         await loginRequiredAlert();
-        return Promise.reject(new Error('No permission'));
+        return Promise.reject(new Error("No permission"));
       }
 
       config.headers.Authorization = `Bearer ${token}`;
     } else {
-
       //** CHO HIỆN THÔNG BÁO YÊU CẦU ĐĂNG NHẬP
       await loginRequiredAlert();
 
-      return Promise.reject(new Error('No token found'));
+      return Promise.reject(new Error("No token found"));
     }
 
     return config;
@@ -97,11 +91,4 @@ adminApi.interceptors.request.use(
   }
 );
 
-export {
-  publicApi,
-  loginRequiredApi,
-  adminApi,
-}
-
-
-
+export { publicApi, loginRequiredApi, adminApi };

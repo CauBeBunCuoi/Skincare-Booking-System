@@ -30,6 +30,7 @@ const Login = () => {
       const user = jwtDecode(token);
       await localStorage.setItem("token", token);
       await localStorage.setItem("user", JSON.stringify(user));
+      console.log("User: ", user);
       toast.success("Login successfully!");
       navigate("/");
     }

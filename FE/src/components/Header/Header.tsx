@@ -26,7 +26,7 @@ const Header = () => {
           { path: "/therapist/bookings", label: "Booking Management" },
           { path: "/therapist/schedules", label: "Schedules" },
         ],
-      }[user.roleId] || []
+      }[user.role._id] || []
     : []; // Không có user → Không có menu riêng
 
   const handleLogOut = () => {
