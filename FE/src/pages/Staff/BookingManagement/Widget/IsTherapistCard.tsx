@@ -1,4 +1,6 @@
-const IsTherapistCard = ({ booking }) => {
+import { Button } from "@mui/material";
+
+const IsTherapistCard = ({ onCheckIn, booking }) => {
   function formatDateTime(isoString) {
     const date = new Date(isoString);
     const options = { hour: "2-digit", minute: "2-digit", hour12: true };
@@ -18,6 +20,10 @@ const IsTherapistCard = ({ booking }) => {
     });
   };
 
+  const handleCheckIn = () => {
+    onCheckIn(booking.booking);
+  };
+
   return (
     <div className="w-full grid grid-cols-7 items-center">
       <div className="col-span-1 flex flex-col items-center justify-center">
@@ -35,9 +41,16 @@ const IsTherapistCard = ({ booking }) => {
       <div className="col-span-1 flex flex-col items-center justify-center">
         {formatCurreny(booking.booking.totalFee)}
       </div>
-      <div className="col-span-2 flex flex-col  justify-center">
+      <div className="col-span-1 flex flex-col items-center  justify-center">
         {booking.therapist.fullName}
       </div>
+      <Button
+        variant="contained"
+        color="success"
+        onClick={() => handleCheckIn()}
+      >
+        Check-in
+      </Button>
     </div>
   );
 };

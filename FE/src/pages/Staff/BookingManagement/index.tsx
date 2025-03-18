@@ -47,6 +47,19 @@ const BookingManagement = () => {
     )
   );
 
+  const handleCheckIn = async (booking) => {
+    const response = await callApi({
+      instance: loginRequiredApi,
+      method: "post",
+      url: `bookings/${booking._id}/check-in`,
+    });
+
+    if (response.success) {
+      toast.success("Check-in successfully!");
+      fetchBookings();
+    }
+  };
+
   const handleCheckOut = async (booking) => {
     const response = await callApi({
       instance: loginRequiredApi,
@@ -73,6 +86,21 @@ const BookingManagement = () => {
 
     if (response.success) {
       await handleCheckOut(booking);
+    }
+  };
+
+  const handleAssignTherapist = async (bookingId, therapistId) => {
+    const response = await callApi({
+      instance: loginRequiredApi,
+      method: "post",
+      url: `/bookings/${bookingId}/assign-therapist`,
+      data: {
+        therapistId: therapistId,
+      },
+    });
+    if (response.success) {
+      toast.success("Assign therapist successfully!");
+      fetchBookings();
     }
   };
 
@@ -145,9 +173,15 @@ const BookingManagement = () => {
                   className="py-3 border-b border-t"
                 >
                   {booking.booking.bookStatusId === 2 ? (
-                    <UnTherapistCard booking={booking} />
+                    <UnTherapistCard
+                      onSelectTherapist={handleAssignTherapist}
+                      booking={booking}
+                    />
                   ) : booking.booking.bookStatusId === 3 ? (
-                    <IsTherapistCard booking={booking} />
+                    <IsTherapistCard
+                      onCheckIn={handleCheckIn}
+                      booking={booking}
+                    />
                   ) : booking.booking.bookStatusId === 5 ? (
                     <ProcessingCard
                       onFeedBack={handleFeedback}

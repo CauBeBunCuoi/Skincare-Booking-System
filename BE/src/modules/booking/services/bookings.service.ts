@@ -321,11 +321,10 @@ export class BookingsService {
         service.duration,
         new Date(booking.appointmentTime),
       );
-
       const addedBooking = await this.bookingRepository.create({
         accountId: new Types.ObjectId(user._id),
         serviceId: new Types.ObjectId(booking.serviceId),
-        bookStatusId: 1,
+        bookStatusId: booking.isAssigned ? 3 : 2,
         bookingDate: new Date(),
         appointmentTime: new Date(booking.appointmentTime),
         startTime: progress.startTime,
@@ -435,6 +434,31 @@ export class BookingsService {
       executionResult,
       feedback,
     };
+  }
+
+  async addExecutionResult(
+    bookingId: Types.ObjectId,
+    executionResult: {
+      customerDescription: string;
+      treatmentDescription: string;
+      therapistRecommend: string;
+    },
+  ): Promise<any> {
+    await this.getExistBookingById(bookingId);
+    try {
+      await this.executionResultRepository.create({
+        bookingId: new Types.ObjectId(bookingId),
+        customerDescription: executionResult.customerDescription,
+        treatmentDescription: executionResult.treatmentDescription,
+        therapistRecommend: executionResult.therapistRecommend,
+      });
+    } catch (error) {
+      console.log(error);
+      throw new HttpException(
+        'Add execution result failed',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   async getAllSchedule(serviceId: Types.ObjectId): Promise<{
@@ -791,6 +815,10 @@ export class BookingsService {
   ): Promise<any> {
     await this.getExistBookingById(bookingId);
     try {
+      console.log('\n\n\n\n\n\n\n');
+      console.log('Booking Id Controller: ', bookingId);
+      console.log('Therapist Id Controller: ', therapistId);
+      console.log('\n\n\n\n\n\n\n');
       await this.bookingRepository.assignTherapist(bookingId, therapistId);
     } catch (error) {
       console.log(error);
