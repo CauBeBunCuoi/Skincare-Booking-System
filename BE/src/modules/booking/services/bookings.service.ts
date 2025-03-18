@@ -309,6 +309,40 @@ export class BookingsService {
         }))
     }
 
+    async getBookingsByTherapistId(therapistId: Types.ObjectId): Promise<any> {
+        const bookings = await this.bookingRepository.findByAssignedTherapistId(therapistId);
+        return await Promise.all(bookings.map(async (booking): Promise<any> => {
+            const bookingStatus = await this.bookingStatusRepository.findById(booking.bookStatusId);
+            const feedback = await this.feedbackRepository.findByBookingId(booking._id);
+            const executionResult = await this.executionResultRepository.findByBookingId(booking._id);
+            const service = await this.serviceRepository.findById(booking.serviceId);
+            var therapist = null;
+            if (booking.assignedTherapistId) {
+                therapist = await this.accountRepository.findById(booking.assignedTherapistId);
+            }
+            const result = {
+                booking,
+                service: {
+                    ...service,
+                    imageUrl: await this.fileService.getImageUrl(this.configService.get<string>('imagePathConfig.SERVICE_IMAGE_PATH'), service._id, "main")
+                },
+                therapist: therapist ? {
+                    _id: therapist._id,
+                    fullName: therapist.fullName,
+                    email: therapist.email,
+                    phoneNumber: therapist.phoneNumber,
+                    imageUrl: await this.fileService.getImageUrl(this.configService.get<string>('imagePathConfig.ACCOUNT_IMAGE_PATH'), therapist._id, "main"),
+                    isDeleted: therapist.isDeleted
+                } : null,
+                bookingStatus,
+                executionResult,
+                feedback
+            }
+            return result;
+        }))
+    }
+
+
     async getBookingDetail(bookingId: Types.ObjectId): Promise<any> {
         const booking = await this.getExistBookingById(bookingId);
         const bookingStatus = await this.bookingStatusRepository.findById(booking.bookStatusId);

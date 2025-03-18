@@ -46,6 +46,16 @@ export class BookingController {
     }
   }
 
+  // Lấy danh sách bookings của therapist id
+  @Get('therapists/:therapistId')
+  async getBookingsByTherapistId(
+    @Param('therapistId') therapistId: Types.ObjectId
+  ) {
+    return {
+      bookings: await this.bookingsService.getBookingsByTherapistId(therapistId)
+    }
+  }
+
   // Lấy booking detail
   @Get(':bookingId')
   async getBookingDetail(
@@ -113,7 +123,7 @@ export class BookingController {
   @Post(':bookingId/execution-result')
   async addExecutionResult(
     @Param('bookingId') bookingId: Types.ObjectId,
-    @Body() body: { 
+    @Body() body: {
       customerDescription: string,
       treatmentDescription: string,
       therapistRecommend: string
@@ -122,7 +132,7 @@ export class BookingController {
     await this.bookingsService.addExecutionResult(bookingId, body);
     return { message: 'Add execution result successfully' };
   }
-  
+
 
   // Check-out cho booking
   @Post(':bookingId/check-out')
@@ -150,7 +160,7 @@ export class BookingController {
     @Param('bookingId') bookingId: Types.ObjectId
   ) {
     return {
-      
+
     }
   }
 
@@ -163,7 +173,7 @@ export class BookingController {
     await this.bookingsService.assignTherapist(bookingId, body.therapistId);
     return { message: 'Assign therapist successfully' };
   }
-  
+
 
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////
