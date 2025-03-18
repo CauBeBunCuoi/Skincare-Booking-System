@@ -106,6 +106,21 @@ export class BookingController {
     return { message: 'Check-in booking successfully' };
   }
 
+  // thêm Execution Result cho booking
+  @Post(':bookingId/execution-result')
+  async addExecutionResult(
+    @Param('bookingId') bookingId: Types.ObjectId,
+    @Body()
+    body: {
+      customerDescription: string;
+      treatmentDescription: string;
+      therapistRecommend: string;
+    },
+  ) {
+    await this.bookingsService.addExecutionResult(bookingId, body);
+    return { message: 'Add execution result successfully' };
+  }
+
   // Check-out cho booking
   @Post(':bookingId/check-out')
   async checkOutBooking(@Param('bookingId') bookingId: Types.ObjectId) {
