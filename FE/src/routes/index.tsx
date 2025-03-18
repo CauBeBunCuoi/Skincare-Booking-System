@@ -14,6 +14,8 @@ import Staffs from "../pages/Manager/Staffs";
 import Therapists from "../pages/Manager/Therapist";
 import Customers from "../pages/Manager/Customers";
 import Quiz from "../pages/Manager/Quiz";
+import TherapistPage from "../pages/Therapist/BookingManagement";
+import ScheduleManagement from "../pages/Therapist/Schedules";
 
 const AppRoutes = () => {
   return (
@@ -34,10 +36,10 @@ const AppRoutes = () => {
             {/* Route dành cho Therapist */}
             <Route element={<RoleRoute role={"Therapist"} />}>
               <Route
-                path="/therapist/bookings"
-                element={<BookingManagementTherapist />}
+                path="/therapist/bookings"    
+                element={<TherapistPage />}
               />
-              <Route path="/therapist/schedules" element={<Schedules />} />
+              <Route path="/therapist/schedules" element={<ScheduleManagement />} />
             </Route>
 
             {/* Route chỉ dành cho Manager */}
