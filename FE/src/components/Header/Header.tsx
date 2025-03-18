@@ -70,13 +70,15 @@ const Header = () => {
             </li>
           )}
         </ul>
-        <Button
-          variant="contained"
-          color="error"
-          onClick={() => handleLogOut()}
-        >
-          Log-out
-        </Button>
+        {user && (
+          <Button
+            variant="contained"
+            color="error"
+            onClick={() => handleLogOut()}
+          >
+            Log-out
+          </Button>
+        )}
       </div>
     </nav>
   );

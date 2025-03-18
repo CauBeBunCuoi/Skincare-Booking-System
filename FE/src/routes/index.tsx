@@ -16,6 +16,7 @@ import Customers from "../pages/Manager/Customers";
 import Quiz from "../pages/Manager/Quiz";
 import TherapistPage from "../pages/Therapist/BookingManagement";
 import ScheduleManagement from "../pages/Therapist/Schedules";
+import CreateService from "../pages/Manager/Services/Widget/CreateService";
 
 const AppRoutes = () => {
   return (
@@ -45,6 +46,10 @@ const AppRoutes = () => {
             {/* Route chỉ dành cho Manager */}
             <Route element={<RoleRoute role={"Manager"} />}>
               <Route path="/manager/services" element={<Services />} />
+              <Route
+                path="/manager/services/create"
+                element={<CreateService />}
+              />
               <Route path="/manager/bookings" element={<Bookings />} />
               <Route path="/manager/quizzes" element={<Quiz />} />
               <Route path="/manager/staffs" element={<Staffs />} />
