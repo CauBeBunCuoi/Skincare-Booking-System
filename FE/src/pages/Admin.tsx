@@ -28,7 +28,6 @@ import ServiceManagement from "../components/ServiceManagement";
 import { MdQuiz } from "react-icons/md";
 import QuizManager from "../components/QuizManager";
 import { FaUserTie } from "react-icons/fa";
-import StafManagement from "../components/StaffManager";
 import StaffManagement from "../components/StaffManager";
 import CustomerManagement from "../components/CustomerManagement";
 

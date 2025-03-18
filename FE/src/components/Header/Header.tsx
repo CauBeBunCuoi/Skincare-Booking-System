@@ -1,64 +1,85 @@
-import React from "react";
-import { AppBar, Toolbar, Typography, IconButton, Button } from "@mui/material";
-import { FaRegUserCircle } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 
-export const Header = () => {
-  const nav = useNavigate();
+const Header = () => {
+  const userData = localStorage.getItem("user");
+  const user = userData ? JSON.parse(userData) : null;
+  const navigate = useNavigate();
+  // Mapping các route theo roleId
+  const navItems = user
+    ? {
+        4: [
+          // Manager
+          { path: "/manager/services", label: "Services" },
+          { path: "/manager/bookings", label: "Bookings" },
+          { path: "/manager/quizzes", label: "Quizzes" },
+          { path: "/manager/staffs", label: "Staffs" },
+          { path: "/manager/therapists", label: "Therapists" },
+          { path: "/manager/customers", label: "Customers" },
+        ],
+        2: [
+          // Staff
+          { path: "/staff/bookings", label: "Booking Management" },
+        ],
+        3: [
+          // Therapist
+          { path: "/therapist/bookings", label: "Booking Management" },
+          { path: "/therapist/schedules", label: "Schedules" },
+        ],
+      }[user.roleId] || []
+    : []; // Không có user → Không có menu riêng
+
+  const handleLogOut = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
   return (
-    <AppBar position="fixed" sx={{ backgroundColor: "#1976d2" }}>
-      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-        {/* Logo */}
-        <Typography variant="h6" sx={{ cursor: "pointer" }}>
-          Skincare
-        </Typography>
+    <nav className="bg-blue-500 p-4 text-white">
+      <div className="container mx-auto flex justify-between items-center">
+        <Link to="/" className="text-xl font-bold">
+          Lumina Derma
+        </Link>
 
-        {/* Navigation */}
-        <div style={{ display: "flex", gap: "20px" }}>
-          {["Home", "About", "Booking", "Contact"].map((item) => (
-            <Button
-              key={item}
-              sx={{
-                color: "white",
-                padding: "10px 20px",
-                borderRadius: "5px",
-                cursor: "pointer",
-                fontWeight: "bold",
-                margin: "0 10px",
-                transition: "0.3s",
-                "&:hover": { color: "black", backgroundColor: "white" }
-              }}
-              onClick={() => {
-                switch(item){
-                  case "Booking": {
-                    nav('/booking')
-                    break
-                  }
-                  case "Home": {
-                    nav('/')
-                    break
-                  }
-                  case "About": {
-                    nav('/aboutus')
-                    break
-                  }
-                  case "Contact": {
-                    nav('/booking')
-                    break
-                  }
-                }
-              }}
-            >
-              {item}
-            </Button>
+        <ul className="flex space-x-4">
+          <li>
+            <Link to="/" className="hover:underline">
+              Home
+            </Link>
+          </li>
+
+          {navItems.map((item) => (
+            <li key={item.path}>
+              <Link to={item.path} className="hover:underline">
+                {item.label}
+              </Link>
+            </li>
           ))}
-        </div>
 
-        {/* User Icon */}
-        <IconButton>
-          <FaRegUserCircle size={25} color="white" />
-        </IconButton>
-      </Toolbar>
-    </AppBar>
+          {user ? (
+            <li>
+              <Link to="/profile" className="hover:underline">
+                Profile
+              </Link>
+            </li>
+          ) : (
+            <li>
+              <Link to="/login" className="hover:underline">
+                Login
+              </Link>
+            </li>
+          )}
+        </ul>
+        <Button
+          variant="contained"
+          color="error"
+          onClick={() => handleLogOut()}
+        >
+          Log-out
+        </Button>
+      </div>
+    </nav>
   );
 };
+
+export default Header;

@@ -1,4 +1,18 @@
-import { Body, Controller, Get, HttpException, Param, Post, Query, Req, Type, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpException,
+  Param,
+  Post,
+  Query,
+  Req,
+  Type,
+  UseGuards,
+  UseInterceptors,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { BookingsService } from './services/bookings.service';
 import { Types } from 'mongoose';
 import { JwtCheckGuard_With_Option } from 'src/common/guards/Auth/JwtCheckGuard_With_Option.guard';
@@ -7,29 +21,27 @@ import { DateTime } from 'luxon';
 @Controller('bookings')
 @UseGuards(JwtCheckGuard_With_Option('public_private'))
 export class BookingController {
-
-  constructor(
-    private readonly bookingsService: BookingsService,
-  ) { }
+  constructor(private readonly bookingsService: BookingsService) {}
 
   // Lấy danh sách bookings
-  @Get("")
+  @Get('')
   async getBookings() {
     return {
-      bookings: await this.bookingsService.getAllBooking()
-    }
+      bookings: await this.bookingsService.getAllBooking(),
+    };
   }
 
   // Thêm mới booking
-  @Post("")
+  @Post('')
   async addBooking(
     @Req() req,
-    @Body() body: {
-      serviceId: Types.ObjectId,
-      appointmentTime: string,
-      isAssigned: boolean,
-      assignedTherapistId: Types.ObjectId,
-    }
+    @Body()
+    body: {
+      serviceId: Types.ObjectId;
+      appointmentTime: string;
+      isAssigned: boolean;
+      assignedTherapistId: Types.ObjectId;
+    },
   ) {
     await this.bookingsService.addBooking(body, req.user);
     return { message: 'Add booking successfully' };
@@ -37,51 +49,50 @@ export class BookingController {
 
   // Lấy danh sách bookings của account id
   @Get('accounts/:accountId')
-  async getBookingsByAccountId(
-    @Param('accountId') accountId: Types.ObjectId
-  ) {
+  async getBookingsByAccountId(@Param('accountId') accountId: Types.ObjectId) {
     return {
-      bookings: await this.bookingsService.getBookingsByAccountId(accountId)
-    }
+      bookings: await this.bookingsService.getBookingsByAccountId(accountId),
+    };
   }
 
   // Lấy booking detail
   @Get(':bookingId')
-  async getBookingDetail(
-    @Param('bookingId') bookingId: Types.ObjectId
-  ) {
+  async getBookingDetail(@Param('bookingId') bookingId: Types.ObjectId) {
     const booking = await this.bookingsService.getBookingDetail(bookingId);
-    return booking
+    return booking;
   }
 
   // Lấy danh sách lịch không theo therapist nào (trả về mảng các ngày, 1 ngày chứa các giờ available)
   @Get('services/:serviceId/schedules')
-  async getAllSchedule(
-    @Param('serviceId') serviceId: Types.ObjectId
-  ) {
+  async getAllSchedule(@Param('serviceId') serviceId: Types.ObjectId) {
     const schedules = await this.bookingsService.getAllSchedule(serviceId);
     return {
       schedules: schedules.schedules,
-      availableTherapists: schedules.availableTherapists
-    }
+      availableTherapists: schedules.availableTherapists,
+    };
   }
 
   // Lấy danh sách lịch theo therapist (trả về mảng các ngày, 1 ngày chứa các giờ available)
   @Get('services/:serviceId/accounts/:accountId/schedules')
   async getScheduleByTherapist(
     @Param('serviceId') serviceId: Types.ObjectId,
-    @Param('accountId') accountId: Types.ObjectId
+    @Param('accountId') accountId: Types.ObjectId,
   ) {
+    const schedules = await this.bookingsService.getScheduleByTherapistId(
+      serviceId,
+      accountId,
+    );
     return {
-      schedules: await this.bookingsService.getScheduleByTherapistId(serviceId, accountId)
-    }
+      schedules: schedules.schedules,
+      availableTherapists: schedules.availableTherapists,
+    };
   }
 
   // Huỷ booking
   @Post(':bookingId/cancel')
   async cancelBooking(
     @Param('bookingId') bookingId: Types.ObjectId,
-    @Body() body: { reason: string }
+    @Body() body: { reason: string },
   ) {
     await this.bookingsService.cancelBooking(bookingId, body.reason);
     return { message: 'Cancel booking successfully' };
@@ -89,18 +100,14 @@ export class BookingController {
 
   // Check-in cho booking
   @Post(':bookingId/check-in')
-  async checkInBooking(
-    @Param('bookingId') bookingId: Types.ObjectId
-  ) {
+  async checkInBooking(@Param('bookingId') bookingId: Types.ObjectId) {
     await this.bookingsService.checkInBooking(bookingId);
     return { message: 'Check-in booking successfully' };
   }
 
   // Check-out cho booking
   @Post(':bookingId/check-out')
-  async checkOutBooking(
-    @Param('bookingId') bookingId: Types.ObjectId
-  ) {
+  async checkOutBooking(@Param('bookingId') bookingId: Types.ObjectId) {
     await this.bookingsService.checkOutBooking(bookingId);
     return { message: 'Check-out booking successfully' };
   }
@@ -109,51 +116,41 @@ export class BookingController {
   @Post(':bookingId/feedback')
   async addFeedback(
     @Param('bookingId') bookingId: Types.ObjectId,
-    @Body() body: { feedbackContent: string, rate: number }
+    @Body() body: { feedbackContent: string; rate: number },
   ) {
     await this.bookingsService.addFeedback(bookingId, body);
     return { message: 'Add feedback successfully' };
   }
 
-
   // Tạo link thanh toán cho booking
   @Post(':bookingId/payment-link')
-  async createPaymentLink(
-    @Param('bookingId') bookingId: Types.ObjectId
-  ) {
-    return {
-      
-    }
+  async createPaymentLink(@Param('bookingId') bookingId: Types.ObjectId) {
+    return {};
   }
 
   // Phân công therapist cho booking
   @Post(':bookingId/assign-therapist')
   async assignTherapist(
     @Param('bookingId') bookingId: Types.ObjectId,
-    @Body() body: { therapistId: Types.ObjectId }
+    @Body() body: { therapistId: Types.ObjectId },
   ) {
     await this.bookingsService.assignTherapist(bookingId, body.therapistId);
     return { message: 'Assign therapist successfully' };
   }
-  
-
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////
   // Lấy danh sách các working hours
   @Get('working-hours')
   async getWorkingHours() {
     return {
-      workingHours: await this.bookingsService.get_AllWorkHours()
-    }
+      workingHours: await this.bookingsService.get_AllWorkHours(),
+    };
   }
   // Lấy danh sách các unavailable hours
   @Get('unavailable-hours/:serviceId')
-  async getUnavailableHours(
-    @Param('serviceId') serviceId: Types.ObjectId
-  ) {
+  async getUnavailableHours(@Param('serviceId') serviceId: Types.ObjectId) {
     return {
-      unavailableHours: await this.bookingsService.getAllSchedule(serviceId)
-    }
+      unavailableHours: await this.bookingsService.getAllSchedule(serviceId),
+    };
   }
-
 }

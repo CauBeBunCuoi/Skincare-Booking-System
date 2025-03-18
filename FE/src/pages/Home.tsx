@@ -8,13 +8,12 @@ import {
   CardContent,
   Box,
 } from "@mui/material";
-import { Header } from "../components/Header/Header";
+
 import DoctorCarousel from "../components/DoctorCarousel";
 
 export const Home = () => {
   return (
     <>
-      <Header />
       {/* Hero Section */}
       <Box position="relative" height={600} mt={10}>
         <img
@@ -62,7 +61,7 @@ export const Home = () => {
                     transform: "scale(1.05)",
                     boxShadow: "0px 6px 20px rgba(0,0,0,0.2)",
                   },
-                  cursor: 'pointer',
+                  cursor: "pointer",
                 }}
               >
                 <CardMedia
