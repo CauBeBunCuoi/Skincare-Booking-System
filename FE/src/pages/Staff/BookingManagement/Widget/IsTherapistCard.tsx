@@ -24,7 +24,7 @@ const IsTherapistCard = ({ booking }) => {
         {booking.booking._id}
       </div>
       <div className="col-span-1 flex flex-col items-center justify-center">
-        Lộc đẹp trai
+        Lộc đẹp trai nè
       </div>
       <div className="col-span-1 flex flex-col items-center justify-center">
         {booking.service.name}
