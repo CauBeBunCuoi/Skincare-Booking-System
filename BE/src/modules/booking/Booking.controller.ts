@@ -122,6 +122,7 @@ export class BookingController {
     await this.bookingsService.addExecutionResult(bookingId, body);
     return { message: 'Add execution result successfully' };
   }
+  
 
   // Check-out cho booking
   @Post(':bookingId/check-out')
