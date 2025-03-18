@@ -23,6 +23,38 @@ import { FileService } from 'src/common/services/file.service';
 import { AccountRepository } from 'src/database/schemas/account/account.repository';
 import { Account } from 'src/database/schemas/account/account.schema';
 
+// STATUS CỦA BOOKING:
+const status = [
+  {
+    _id: 1,
+    name: 'Mới Tạo',
+  },
+  {
+    _id: 2,
+    name: 'Chưa Có Điều Trị Viên',
+  },
+  {
+    _id: 3,
+    name: 'Đã Có Điều Trị Viên',
+  },
+  {
+    _id: 4,
+    name: 'Khách Đã Check-in',
+  },
+  {
+    _id: 5,
+    name: 'Khách Đã Thực Hiện Xong (Confirm bởi Điều Trị Viên)',
+  },
+  {
+    _id: 6,
+    name: 'Khách Đã Thanh Toán',
+  },
+  {
+    _id: 7,
+    name: 'Đã Huỷ',
+  },
+];
+
 @Injectable()
 export class BookingsService {
   constructor(
