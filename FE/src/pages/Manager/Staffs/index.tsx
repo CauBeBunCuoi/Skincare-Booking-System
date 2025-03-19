@@ -42,6 +42,8 @@ const Staffs: React.FC = () => {
     setLoading(false);
   };
 
+  console.log(staffs)
+
   const handleEdit = (staff: Staff) => {
     setSelectedStaff(staff);
     setOpen(true);
