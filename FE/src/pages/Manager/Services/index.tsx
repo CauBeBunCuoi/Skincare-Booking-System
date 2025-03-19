@@ -4,6 +4,7 @@ import { publicApi } from "../../../api/instance/axiosInstance";
 import { callApi } from "../../../api/main/api_call/api";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import ManagerTabs from "../../../components/TabsManager";
 
 const Services = () => {
   const [services, setServices] = useState([]);
@@ -40,18 +41,11 @@ const Services = () => {
 
   return (
     <div className="container mx-auto">
+      {/* Add Manager Tabs at the top */}
       <h1 className="text-2xl font-bold mt-10">Services</h1>
-      <div className="w-[90%] mx-auto mt-5 flex justify-end">
-        <Button
-          onClick={() => {
-            navigate("/manager/services/create");
-          }}
-          variant="contained"
-          color="primary"
-        >
-          Add Service
-        </Button>
-      </div>
+      <ManagerTabs />
+
+      <div className="w-[90%] mx-auto mt-5 flex justify-end"></div>
       <div className="w-[90%] mx-auto mt-10">
         {loading ? (
           <p>Loading...</p>
