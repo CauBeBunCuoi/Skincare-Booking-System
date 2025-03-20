@@ -23,8 +23,8 @@ const RoleRoute = ({ role }) => {
       />
     );
   }
-  if (roleMap[role] && user.role._id !== roleMap[role]) {
-    console.log("lakjdslfkjas;lkdfj")
+  if (roleMap[role] && user.roleId !== roleMap[role]) {
+    console.log("lakjdslfkjas;lkdfj");
     return (
       <Navigate
         to="/"
