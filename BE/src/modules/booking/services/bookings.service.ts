@@ -378,6 +378,12 @@ export class BookingsService {
     );
   }
 
+  async getBookingByTherapistId(therapistId: Types.ObjectId): Promise<any> {
+    const bookings =
+      await this.bookingRepository.findByAssignedTherapistId(therapistId);
+    return await Promise.all(bookings);
+  }
+
   async getBookingDetail(bookingId: Types.ObjectId): Promise<any> {
     const booking = await this.getExistBookingById(bookingId);
     const bookingStatus = await this.bookingStatusRepository.findById(
@@ -412,7 +418,13 @@ export class BookingsService {
       therapistRecommend: string;
     },
   ): Promise<any> {
-    await this.getExistBookingById(bookingId);
+    const booking = await this.getExistBookingById(bookingId);
+    if (booking.bookStatusId === 4) {
+      this.bookingRepository.updateStatus(bookingId, 5);
+    } else {
+      console.log('\n\n\n\n\nBooking status is not 4');
+      console.log('\n\n\n\n\n\n');
+    }
     try {
       await this.executionResultRepository.create({
         bookingId: new Types.ObjectId(bookingId),

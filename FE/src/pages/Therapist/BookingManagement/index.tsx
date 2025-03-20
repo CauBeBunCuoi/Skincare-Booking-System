@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -16,52 +16,71 @@ import {
   Paper,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
+import { callApi } from "../../../api/main/api_call/api";
+import { loginRequiredApi } from "../../../api/instance/axiosInstance";
+import { set } from "react-hook-form";
+import { toast } from "react-toastify";
+function formatDate(isoString) {
+  const date = new Date(isoString);
+  const time = date.toLocaleTimeString("vi-VN", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const year = date.getFullYear();
+  return `${time} - ${day}/${month}/${year}`;
+}
 const TherapistPage = () => {
   const [tabIndex, setTabIndex] = useState(0);
+  const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [openDialog, setOpenDialog] = useState(false);
+  const [selectedBookingId, setSelectedBookingId] = useState(null);
+  const [upComingBookings, setUpComingBookings] = useState([]);
+  const [hasCheckInBookings, setHasCheckInBookings] = useState([]);
+  const [completedBookings, setCompletedBookings] = useState([]);
+
   const [executionResult, setExecutionResult] = useState({
     customerDescription: "",
     treatmentDescription: "",
     therapistRecommend: "",
   });
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const therapistId = "t789";
-  const bookings = [
-    {
-      booking: {
-        _id: "b1",
-        assignedTherapistId: "t789",
-        bookStatusId: 3,
-        appointmentTime: "2025-03-18T13:10:07.083Z",
-      },
-      service: { name: "Full Body Massage" },
-      bookingStatus: { name: "Up Coming" },
-    },
-    {
-      booking: {
-        _id: "b2",
-        assignedTherapistId: "t789",
-        bookStatusId: 4,
-        appointmentTime: "2025-03-18T15:00:00.000Z",
-      },
-      service: { name: "Hot Stone Therapy" },
-      bookingStatus: { name: "Has Check-in" },
-    },
-    {
-      booking: {
-        _id: "b3",
-        assignedTherapistId: "t789",
-        bookStatusId: 5,
-        appointmentTime: "2025-03-17T11:00:00.000Z",
-      },
-      service: { name: "Aromatherapy Massage" },
-      bookingStatus: { name: "Completed" },
-    },
-  ];
+  useEffect(() => {
+    fetchBookings();
+  }, []);
 
-  const handleConfirmCompleted = () => {
+  const fetchBookings = async () => {
+    setLoading(true);
+    const response = await callApi({
+      instance: loginRequiredApi,
+      method: "get",
+      url: `/bookings/therapist/${accountId}`,
+    });
+    if (response.success) {
+      setBookings(response.data.bookings);
+      setUpComingBookings(
+        response.data.bookings.filter((booking) => booking.bookStatusId === 3)
+      );
+      setHasCheckInBookings(
+        response.data.bookings.filter((booking) => booking.bookStatusId === 4)
+      );
+      setCompletedBookings(
+        response.data.bookings.filter((booking) => booking.bookStatusId === 6)
+      );
+      setLoading(false);
+    } else {
+      console.log("Error fetching data: ", response.message);
+      setLoading(false);
+    }
+  };
+  const user = JSON.parse(localStorage.getItem("user"));
+  const accountId = user?._id;
+
+  const handleConfirmCompleted = (id) => {
+    setSelectedBookingId(id);
     setOpenDialog(true);
   };
 
@@ -69,8 +88,21 @@ const TherapistPage = () => {
     setOpenDialog(false);
   };
 
-  const handleSaveExecutionResult = () => {
+  const handleSaveExecutionResult = async () => {
+    console.log("Handle Confirm For Booking ID: ", selectedBookingId);
     console.log("Execution Result:", executionResult);
+    const response = await callApi({
+      instance: loginRequiredApi,
+      method: "post",
+      url: `/bookings/${selectedBookingId}/execution-result`,
+      data: executionResult,
+    });
+    if (response.success) {
+      toast.success("Confirm Completed Successfully!");
+      fetchBookings();
+    } else {
+      toast.error("Error when confirm completed: " + response.message);
+    }
     setOpenDialog(false);
   };
 
@@ -106,52 +138,82 @@ const TherapistPage = () => {
         </Tabs>
       </Paper>
 
-      <Grid container spacing={3} sx={{ marginTop: 2 }}>
-        {bookings
-          .filter((b) =>
-            tabIndex === 0
-              ? [3, 4].includes(b.booking.bookStatusId)
-              : tabIndex === 1
-              ? b.booking.bookStatusId === 4
-              : b.booking.bookStatusId === 5
-          )
-          .map((b) => (
-            <Grid item xs={12} sm={6} md={4} key={b.booking._id}>
-              <Card
-                sx={{
-                  borderRadius: 2,
-                  boxShadow: 3,
-                  backgroundColor: "#fff",
-                  transition: "0.3s",
-                  "&:hover": { boxShadow: 6 },
-                }}
-              >
-                <CardContent>
-                  <Typography variant="h6" color="primary">
-                    {b.service.name}
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    Status: {b.bookingStatus.name}
-                  </Typography>
-                  <Typography variant="body2">
-                    Appointment:{" "}
-                    {new Date(b.booking.appointmentTime).toLocaleString()}
-                  </Typography>
-                </CardContent>
-                {tabIndex === 1 && b.booking.bookStatusId === 4 && (
+      {loading ? (
+        <p>Loading....</p>
+      ) : (
+        <div className="w-[90%] mx-auto mt-10">
+          {tabIndex === 0 && upComingBookings.length > 0 && (
+            <div className="w-full grid grid-cols-3 gap-4">
+              {upComingBookings.map((booking) => (
+                <div className="rounded-md border border-gray-300 p-4">
+                  <p>
+                    <strong>Booking Id</strong>: #{booking._id}
+                  </p>
+                  <p>
+                    <strong>AppointmentTime:</strong>{" "}
+                    {formatDate(booking.appointmentTime)}
+                  </p>
+                  <p>
+                    <strong>Customer:</strong> Hào nè
+                  </p>
+                  <p>
+                    <strong>Service:</strong> Điều trị rỗ da
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+          {tabIndex === 1 && hasCheckInBookings.length > 0 && (
+            <div className="w-full grid grid-cols-3 gap-4">
+              {hasCheckInBookings.map((booking) => (
+                <div className="rounded-md border border-gray-300 p-4">
+                  <p>
+                    <strong>Booking Id</strong>: #{booking._id}
+                  </p>
+                  <p>
+                    <strong>AppointmentTime:</strong>{" "}
+                    {formatDate(booking.appointmentTime)}
+                  </p>
+                  <p>
+                    <strong>Customer:</strong> Hào nè
+                  </p>
+                  <p className="mb-2">
+                    <strong>Service:</strong> Điều trị rỗ da
+                  </p>
                   <Button
-                    variant="contained"
                     color="success"
-                    sx={{ m: 1, borderRadius: 2, textTransform: "none" }}
-                    onClick={handleConfirmCompleted}
+                    variant="contained"
+                    onClick={() => handleConfirmCompleted(booking._id)}
                   >
                     Confirm Completed
                   </Button>
-                )}
-              </Card>
-            </Grid>
-          ))}
-      </Grid>
+                </div>
+              ))}
+            </div>
+          )}
+          {tabIndex === 2 && completedBookings.length > 0 && (
+            <div className="w-full grid grid-cols-3 gap-4">
+              {completedBookings.map((booking) => (
+                <div className="rounded-md border border-gray-300 p-4">
+                  <p>
+                    <strong>Booking Id</strong>: #{booking._id}
+                  </p>
+                  <p>
+                    <strong>AppointmentTime:</strong>{" "}
+                    {formatDate(booking.appointmentTime)}
+                  </p>
+                  <p>
+                    <strong>Customer:</strong> Hào nè
+                  </p>
+                  <p>
+                    <strong>Service:</strong> Điều trị rỗ da
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
 
       <Dialog
         open={openDialog}
@@ -159,7 +221,10 @@ const TherapistPage = () => {
         maxWidth="sm"
         fullWidth
       >
-        <DialogTitle>Enter Execution Result</DialogTitle>
+        <DialogTitle>
+          Enter Execution Result For Booking ID:{" "}
+          {selectedBookingId ? selectedBookingId : "N/A"}
+        </DialogTitle>
         <DialogContent>
           <TextField
             label="Customer Description"
