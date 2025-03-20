@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Modal,
   Box,
@@ -15,32 +15,59 @@ import {
   IconButton,
   Card,
   CardContent,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from "@mui/material";
 import { Add, Delete, Edit } from "@mui/icons-material";
+import axios from "axios";
+import { callApi } from "../api/main/api_call/api";
+import { publicApi } from "../api/instance/axiosInstance";
+
+interface Customer {
+  _id: string;
+  username: string;
+  password: string;
+  phoneNumber: number;
+  email: string;
+  roleId: number;
+  fullName: string;
+  isDeleted?: boolean;
+  imageUrl?: string;
+}
 
 const CustomerManagement = () => {
   const [open, setOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
-  const [customers, setCustomers] = useState([
-    {
-      id: 1,
-      name: "Michael Johnson",
-      email: "michael@example.com",
-      phone: "123-456-7890",
-    },
-    {
-      id: 2,
-      name: "Emily Davis",
-      email: "emily@example.com",
-      phone: "987-654-3210",
-    },
-  ]);
+  const [customers, setCustomers] = useState<Customer[]>([]);
   const [newCustomer, setNewCustomer] = useState({
-    name: "",
+    fullName: "",
     email: "",
-    phone: "",
+    phoneNumber: "",
   });
   const [editCustomer, setEditCustomer] = useState(null);
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
+  const [customerToDelete, setCustomerToDelete] = useState<string | null>(null);
+
+  // Fetch accounts data
+  useEffect(() => {
+    fetchCustomers();
+  }, []);
+
+  const fetchCustomers = async () => {
+    try {
+      const response = await callApi({
+        instance: publicApi,
+        method: "get",
+        url: `/accounts/customers`,
+      });
+
+      setCustomers(response.data.accounts);
+    } catch (error) {
+      console.error("Error fetching accounts:", error);
+    }
+  };
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -50,24 +77,125 @@ const CustomerManagement = () => {
   };
   const handleEditClose = () => setEditOpen(false);
 
-  const handleAddCustomer = () => {
-    setCustomers([...customers, { id: customers.length + 1, ...newCustomer }]);
-    setNewCustomer({ name: "", email: "", phone: "" });
-    handleClose();
+  const handleAddCustomer = async () => {
+    try {
+      const response = await callApi({
+        instance: publicApi,
+        method: "post",
+        url: "/accounts",
+        data: {
+          account: {
+            username: newCustomer.username,
+            password: newCustomer.password,
+            phoneNumber: newCustomer.phoneNumber,
+            email: newCustomer.email,
+            roleId: newCustomer.roleId,
+            fullName: newCustomer.fullName,
+          },
+          imageBase64: newCustomer.imageBase64 || "",
+        },
+      });
+
+      // Add the new customer to the state
+      setCustomers([...customers, response.data]);
+
+      // Reset input fields
+      setNewCustomer({
+        username: "",
+        password: "",
+        phoneNumber: 0,
+        email: "",
+        roleId: 0,
+        fullName: "",
+        imageBase64: "",
+      });
+
+      fetchCustomers();
+
+      handleClose();
+    } catch (error) {
+      console.error("Error adding customer:", error);
+    }
   };
 
-  const handleUpdateCustomer = () => {
-    setCustomers(
-      customers.map((cust) =>
-        cust.id === editCustomer.id ? editCustomer : cust
-      )
-    );
-    handleEditClose();
+  const handleUpdateCustomer = async () => {
+    if (!editCustomer) return;
+
+    try {
+      const response = await callApi({
+        instance: publicApi,
+        method: "post",
+        url: `/accounts/${editCustomer._id}`,
+        data: {
+          account: {
+            username: editCustomer.username || "",
+            password: editCustomer.password || "",
+            phoneNumber: editCustomer.phoneNumber || 0,
+            email: editCustomer.email || "",
+            roleId: editCustomer.roleId || 0,
+            fullName: editCustomer.fullName || "",
+          },
+          imageBase64: editCustomer.imageBase64 || "",
+        },
+      });
+
+      setCustomers(
+        customers.map((cust) =>
+          cust._id === editCustomer._id ? response.data : cust
+        )
+      );
+
+      fetchCustomers();
+
+      handleEditClose();
+    } catch (error) {
+      console.error("Error updating customer:", error);
+    }
   };
 
-  const handleDeleteCustomer = (id) => {
-    setCustomers(customers.filter((customer) => customer.id !== id));
+  // const handleUpdateCustomer = async () => {
+  //   try {
+  //     await axios.put(`${API_URL}/${editCustomer._id}`, editCustomer);
+  //     setCustomers(
+  //       customers.map((cust) =>
+  //         cust._id === editCustomer._id ? editCustomer : cust
+  //       )
+  //     );
+  //     handleEditClose();
+  //   } catch (error) {
+  //     console.error("Error updating customer:", error);
+  //   }
+  // };
+
+  const handleDeleteConfirmOpen = (id: string) => {
+    setCustomerToDelete(id);
+    setDeleteConfirmOpen(true);
   };
+
+  const handleDeleteConfirmClose = () => {
+    setDeleteConfirmOpen(false);
+    setCustomerToDelete(null);
+  };
+
+  const handleDeleteCustomer = async (id) => {
+    try {
+      const response = await callApi({
+        instance: publicApi,
+        method: "delete",
+        url: `/accounts/${customerToDelete}`,
+      });
+
+      if (!response.success) {
+        throw new Error("Looix");
+      }
+
+      fetchCustomers();
+      handleDeleteConfirmClose()
+    } catch (error) {
+      console.error("Error deleting customer:", error);
+    }
+  };
+
   return (
     <Card sx={{ p: 2, boxShadow: "none", borderRadius: 2 }}>
       <CardContent>
@@ -85,19 +213,19 @@ const CustomerManagement = () => {
             <TableHead>
               <TableRow>
                 <TableCell>ID</TableCell>
-                <TableCell>Name</TableCell>
+                <TableCell>Full Name</TableCell>
                 <TableCell>Email</TableCell>
-                <TableCell>Phone</TableCell>
+                <TableCell>Phone Number</TableCell>
                 <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {customers.map((customer) => (
-                <TableRow key={customer.id}>
-                  <TableCell>{customer.id}</TableCell>
-                  <TableCell>{customer.name}</TableCell>
+                <TableRow key={customer._id}>
+                  <TableCell>{customer._id}</TableCell>
+                  <TableCell>{customer.fullName}</TableCell>
                   <TableCell>{customer.email}</TableCell>
-                  <TableCell>{customer.phone}</TableCell>
+                  <TableCell>{customer.phoneNumber}</TableCell>
                   <TableCell>
                     <IconButton
                       color="primary"
@@ -107,7 +235,7 @@ const CustomerManagement = () => {
                     </IconButton>
                     <IconButton
                       color="error"
-                      onClick={() => handleDeleteCustomer(customer)}
+                      onClick={() => handleDeleteConfirmOpen(customer._id)}
                     >
                       <Delete />
                     </IconButton>
@@ -118,59 +246,138 @@ const CustomerManagement = () => {
           </Table>
         </TableContainer>
       </CardContent>
+      <Dialog open={deleteConfirmOpen} onClose={handleDeleteConfirmClose}>
+        <DialogTitle>Confirm Deletion</DialogTitle>
+        <DialogContent>
+          <Typography>
+            Are you sure you want to delete this customer?
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDeleteConfirmClose} color="primary">
+            Cancel
+          </Button>
+          <Button
+            onClick={handleDeleteCustomer}
+            color="error"
+            variant="contained"
+          >
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
 
+      {/* Add Customer Modal */}
+      {/* Add Customer Modal */}
       <Modal open={open} onClose={handleClose}>
         <Box
           sx={{
-            width: "40%",
+            width: "50%",
             margin: "auto",
-            marginTop: "10%",
+            marginTop: "1%",
             backgroundColor: "white",
-            padding: 3,
-            textAlign: "center",
+            padding: 4,
+            borderRadius: 2,
+            boxShadow: 3,
           }}
         >
-          <Typography variant="h6" gutterBottom>
+          <Typography variant="h5" fontWeight="bold" textAlign="center" mb={2}>
             Add New Customer
           </Typography>
+
           <TextField
             fullWidth
-            label="Name"
+            label="Username"
             margin="normal"
-            value={newCustomer.name}
+            value={newCustomer.username}
             onChange={(e) =>
-              setNewCustomer({ ...newCustomer, name: e.target.value })
+              setNewCustomer({ ...newCustomer, username: e.target.value })
             }
           />
+
+          <TextField
+            fullWidth
+            label="Password"
+            margin="normal"
+            type="password"
+            value={newCustomer.password}
+            onChange={(e) =>
+              setNewCustomer({ ...newCustomer, password: e.target.value })
+            }
+          />
+
+          <TextField
+            fullWidth
+            label="Full Name"
+            margin="normal"
+            value={newCustomer.fullName}
+            onChange={(e) =>
+              setNewCustomer({ ...newCustomer, fullName: e.target.value })
+            }
+          />
+
           <TextField
             fullWidth
             label="Email"
             margin="normal"
+            type="email"
             value={newCustomer.email}
             onChange={(e) =>
               setNewCustomer({ ...newCustomer, email: e.target.value })
             }
           />
+
           <TextField
             fullWidth
-            label="Phone"
+            label="Phone Number"
             margin="normal"
-            value={newCustomer.phone}
+            type="number"
+            value={newCustomer.phoneNumber}
             onChange={(e) =>
-              setNewCustomer({ ...newCustomer, phone: e.target.value })
+              setNewCustomer({
+                ...newCustomer,
+                phoneNumber: Number(e.target.value),
+              })
             }
           />
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{ marginTop: 2 }}
-            onClick={handleAddCustomer}
-          >
-            Add
-          </Button>
+
+          <TextField
+            fullWidth
+            label="Role ID"
+            margin="normal"
+            type="number"
+            value={newCustomer.roleId}
+            onChange={(e) =>
+              setNewCustomer({ ...newCustomer, roleId: Number(e.target.value) })
+            }
+          />
+
+          <TextField
+            fullWidth
+            label="Image (Base64)"
+            margin="normal"
+            value={newCustomer.imageBase64}
+            onChange={(e) =>
+              setNewCustomer({ ...newCustomer, imageBase64: e.target.value })
+            }
+          />
+
+          <Box mt={3} display="flex" justifyContent="space-between">
+            <Button variant="outlined" onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleAddCustomer}
+            >
+              Add Customer
+            </Button>
+          </Box>
         </Box>
       </Modal>
 
+      {/* Edit Customer Modal */}
       <Modal open={editOpen} onClose={handleEditClose}>
         <Box
           sx={{
@@ -187,11 +394,11 @@ const CustomerManagement = () => {
           </Typography>
           <TextField
             fullWidth
-            label="Name"
+            label="Full Name"
             margin="normal"
-            value={editCustomer?.name || ""}
+            value={editCustomer?.fullName || ""}
             onChange={(e) =>
-              setEditCustomer({ ...editCustomer, name: e.target.value })
+              setEditCustomer({ ...editCustomer, fullName: e.target.value })
             }
           />
           <TextField
@@ -205,12 +412,13 @@ const CustomerManagement = () => {
           />
           <TextField
             fullWidth
-            label="Phone"
+            label="Phone Number"
             margin="normal"
-            value={editCustomer?.phone || ""}
+            value={editCustomer?.phoneNumber || ""}
             onChange={(e) =>
-              setEditCustomer({ ...editCustomer, phone: e.target.value })
+              setEditCustomer({ ...editCustomer, phoneNumber: e.target.value })
             }
+            type="number"
           />
           <Button
             variant="contained"

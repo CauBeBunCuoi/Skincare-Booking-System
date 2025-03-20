@@ -64,7 +64,6 @@ adminApi.interceptors.request.use(
     config = addCommonHeaders(config);
     const token = LocalStorageUtil.getAuthTokenFromLocalStorage();
 
-
     if (token) {
       if (!JwtUtil.isTokenValid(token)) {
         await loginRequiredAlert();
@@ -89,3 +88,4 @@ adminApi.interceptors.request.use(
 );
 
 export { publicApi, loginRequiredApi, adminApi };
+
