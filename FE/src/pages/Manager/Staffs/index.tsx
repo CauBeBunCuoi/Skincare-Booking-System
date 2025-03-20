@@ -21,10 +21,19 @@ const Staffs: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [selectedStaff, setSelectedStaff] = useState<Staff | null>(null);
   const [imageBase64, setImageBase64] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [filteredStaffs, setFilteredStaffs] = useState<Staff[]>([]);
 
   useEffect(() => {
     fetchStaffs();
   }, []);
+
+  useEffect(() => {
+    const filtered = staffs.filter(staff =>
+      staff.fullName.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredStaffs(filtered);
+  }, [searchQuery, staffs]);
 
   const fetchStaffs = async () => {
     setLoading(true);
@@ -36,6 +45,7 @@ const Staffs: React.FC = () => {
 
     if (response.success) {
       setStaffs(response.data.accounts);
+      setFilteredStaffs(response.data.accounts);
     } else {
       toast.error("Error when fetching staff data: " + response.message);
     }
@@ -58,10 +68,14 @@ const Staffs: React.FC = () => {
   const handleSave = async () => {
     if (!selectedStaff) return;
 
+    if (!selectedStaff.email || !selectedStaff.fullName || !selectedStaff.imageUrl || !selectedStaff.phoneNumber || !selectedStaff.username) {
+      return
+    }
+
     const response = await callApi({
       instance: publicApi,
-      method: "post",
-      url: `/accounts/${selectedStaff._id}`,
+      method: selectedStaff._id ? "post" : "post",
+      url: selectedStaff._id ? `/accounts/${selectedStaff._id}` : "/accounts",
       data: {
         accountId: selectedStaff._id,
         account: {
@@ -81,7 +95,7 @@ const Staffs: React.FC = () => {
       fetchStaffs();
       handleClose();
     } else {
-      toast.error("Error when updating staff: " + response.message);
+      toast.error("error");
     }
   };
 
@@ -102,15 +116,31 @@ const Staffs: React.FC = () => {
     }
   };
 
+  const handleAdd = () => {
+    setSelectedStaff({ _id: "", username: "", password: "", phoneNumber: 0, email: "", roleId: 2, fullName: "" });
+    setOpen(true);
+  };
+
   return (
     <div className="container mx-auto">
       <h1 className="text-2xl font-bold mt-10">Staff List</h1>
+      <div className="w-[90%] mx-auto mt-5 flex justify-between">
+        <TextField
+          label="Search Staff"
+          variant="outlined"
+          fullWidth
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
+
       <div className="w-[90%] mx-auto mt-5 flex justify-end">
-        <Button onClick={() => setOpen(true)} variant="contained" color="primary">
+        <Button onClick={() => handleAdd()} variant="contained" >
           Add Staff
         </Button>
       </div>
-      <div className="w-[90%] mx-auto mt-10">
+
+      <div className="w-[90%] mx-auto mt-10 mb-10">
         {loading ? (
           <p>Loading...</p>
         ) : (
@@ -126,7 +156,7 @@ const Staffs: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {staffs.map((staff) => (
+              {filteredStaffs.map((staff) => (
                 <tr key={staff._id} className="border hover:bg-gray-100">
                   <td className="border p-2 text-center">
                     <img
@@ -159,8 +189,9 @@ const Staffs: React.FC = () => {
         <DialogContent>
           <TextField label="Full Name" fullWidth margin="dense" value={selectedStaff?.fullName || ""} onChange={(e) => setSelectedStaff({ ...selectedStaff!, fullName: e.target.value })} />
           <TextField label="Username" fullWidth margin="dense" value={selectedStaff?.username || ""} onChange={(e) => setSelectedStaff({ ...selectedStaff!, username: e.target.value })} />
-          <TextField label="Email" fullWidth margin="dense" value={selectedStaff?.email || ""} onChange={(e) => setSelectedStaff({ ...selectedStaff!, email: e.target.value })} />
+          <TextField type="email" label="Email" fullWidth margin="dense" value={selectedStaff?.email || ""} onChange={(e) => setSelectedStaff({ ...selectedStaff!, email: e.target.value })} />
           <TextField label="Phone Number" fullWidth margin="dense" value={selectedStaff?.phoneNumber || ""} onChange={(e) => setSelectedStaff({ ...selectedStaff!, phoneNumber: Number(e.target.value) })} />
+          <TextField label="Image" fullWidth margin="dense" value={selectedStaff?.imageUrl || ""} onChange={(e) => setSelectedStaff({ ...selectedStaff!, imageUrl: e.target.value })} />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="secondary">Cancel</Button>

@@ -58,6 +58,7 @@ const Therapists: React.FC = () => {
   const [selectedTherapist, setSelectedTherapist] = useState<any>();
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [show, setShow] = useState<boolean>(false)
+  const [imageBase64, setImageBase64] = useState<string>("");
 
   useEffect(() => {
     fetchTherapists();
@@ -137,10 +138,14 @@ const Therapists: React.FC = () => {
   const handleSave = async () => {
     if (!selectedTherapist) return;
 
+    if (!selectedTherapist.email || !selectedTherapist.fullName || !selectedTherapist.imageUrl || !selectedTherapist.phoneNumber || !selectedTherapist.username) {
+      return
+    }
+
     const response = await callApi({
       instance: publicApi,
-      method: "post",
-      url: `/accounts/${selectedTherapist._id}`,
+      method: selectedTherapist._id ? "post" : "post",
+      url: selectedTherapist._id ? `/accounts/${selectedTherapist._id}` : "/accounts",
       data: {
         accountId: selectedTherapist._id,
         account: {
@@ -151,6 +156,7 @@ const Therapists: React.FC = () => {
           roleId: selectedTherapist.roleId,
           fullName: selectedTherapist.fullName,
         },
+        imageBase64,
       },
     });
 
@@ -159,20 +165,23 @@ const Therapists: React.FC = () => {
       setTherapists(therapists.map((therapist) =>
         therapist._id === selectedTherapist._id ? selectedTherapist : therapist
       ));
-      setOpen(false);
-      setSelectedTherapist(null);
+      fetchTherapists()
+      handleClose();
     } else {
-      toast.error("Error when saving therapist: " + response.message);
+      toast.error("error")
     }
   };
 
   const handleClose = () => {
     setOpen(false);
     setSelectedTherapist(null);
+    setImageBase64('')
   };
 
-  console.log(selectedTherapist)
-
+  const handleAdd = () => {
+    setSelectedTherapist({ _id: "", username: "", password: "", phoneNumber: 0, email: "", roleId: 3, fullName: "" })
+    setOpen(true);
+  };
 
   return (
     <div className="container mx-auto">
@@ -274,7 +283,13 @@ const Therapists: React.FC = () => {
         />
       </div>
 
-      <div className="w-[90%] mx-auto mt-10">
+      <div className="w-[90%] mx-auto mt-5 flex justify-end">
+        <Button onClick={() => handleAdd()} variant="contained" >
+          Add Therapist
+        </Button>
+      </div>
+
+      <div className="w-[90%] mx-auto mt-10 mb-10">
         {loading ? (
           <p>Loading...</p>
         ) : (
@@ -361,6 +376,7 @@ const Therapists: React.FC = () => {
             label="Email"
             fullWidth
             margin="dense"
+            type="email"
             value={selectedTherapist?.email || ""}
             onChange={(e) => setSelectedTherapist({ ...selectedTherapist!, email: e.target.value })}
           />
@@ -370,6 +386,12 @@ const Therapists: React.FC = () => {
             margin="dense"
             value={selectedTherapist?.phoneNumber || ""}
             onChange={(e) => setSelectedTherapist({ ...selectedTherapist!, phoneNumber: Number(e.target.value) })}
+          />
+          <TextField
+            label="Image"
+            fullWidth margin="dense"
+            value={selectedTherapist?.imageUrl || ""}
+            onChange={(e) => setSelectedTherapist({ ...selectedTherapist!, imageUrl: e.target.value })}
           />
         </DialogContent>
         <DialogActions>
