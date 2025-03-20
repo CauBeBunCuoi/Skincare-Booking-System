@@ -32,7 +32,7 @@ const Services = () => {
     }
   };
 
-  console.log(services)
+  console.log(services);
 
   const formatCurrency = (amount) => {
     return amount.toLocaleString("vi-VN", {
