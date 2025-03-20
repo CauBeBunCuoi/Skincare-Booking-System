@@ -1,167 +1,189 @@
 import React, { useEffect, useState } from "react";
 import {
-    Avatar,
-    Box,
-    Button,
-    IconButton,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Typography,
-    Paper,
-    Tooltip,
+  Avatar,
+  Box,
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+  Paper,
 } from "@mui/material";
-import { Edit, Delete, Payment } from "@mui/icons-material";
 import axios from "axios";
-import { portServer } from '../utils/portserver';
+import { portServer } from "../utils/portserver";
+import { callApi } from "../api/main/api_call/api";
+import { publicApi } from "../api/instance/axiosInstance";
+import BookingDetailPopup from "./BookingDetailPopup";
 
 interface Booking {
+  booking: {
     _id: string;
-    booking: {
-        patientName: string;
-        checkinTime: string;
-        checkoutTime?: string;
-    };
-    service: {
-        name: string;
-    };
-    therapist: {
-        fullName: string;
-        imageUrl: string;
-    };
-    bookingStatus: string;
+    appointmentTime: string;
+    startTime: string;
+    endTime: string;
+    checkInTime?: string;
+    checkOutTime?: string;
+    totalFee: number;
+    hasPaid: boolean;
+    cancelReason?: string;
+  };
+  service: {
+    name: string;
+    duration: number;
+    fee: number;
+  };
+  therapist: {
+    fullName: string;
+    experienceYears: number;
+    imageUrl: string;
+  };
+  bookingStatus: {
+    name: string;
+  };
+  executionResult?: {
+    customerDescription: string;
+    treatmentDescription: string;
+    therapistRecommend: string;
+  };
+  feedback?: {
+    feedbackContent: string;
+    rate: number;
+  };
 }
 
 const BookingList: React.FC = () => {
-    const [bookings, setBookings] = useState<Booking[]>([
-        {
-            "_id": "65a4bcdef123456789abcd01",
-            "booking": {
-                'patientName': "Lộc",
-                "checkinTime": "2025-03-20T14:00:00Z",
-                "checkoutTime": "2025-03-10T10:30:00Z"
-            },
-            "service": {
-                "name": "Deep Tissue Massage",
-            },
-            "therapist": {
-                "fullName": "Dr. John Doe",
-                "imageUrl": "https://example.com/john-doe.jpg"
-            },
-            "bookingStatus": "confirmed",
-            "executionResult": {
-                "success": true,
-                "message": "Booking completed successfully."
-            },
-            "feedback": {
-                "rating": 5,
-                "comment": "Amazing experience, very professional therapist!"
-            }
-        }
-    ]);
+  const [bookings, setBookings] = useState<Booking[]>([]);
+  const [selectedBooking, setSelectedBooking] = useState(null);
+  const [openPopup, setOpenPopup] = useState(false);
 
-    const getAllBookings = async () => {
-        try {
-            const res = await axios.get(`${portServer}/bookings`);
-            setBookings(res.data.bookings);
-        } catch (error) {
-            console.error("Error fetching bookings:", error);
-        }
-    };
+  const handleOpenPopup = (booking) => {
+    setSelectedBooking(booking);
+    setOpenPopup(true);
+  };
 
-    const handleCheckOut = async (id: string) => {
-        try {
-            await axios.post(`${portServer}/bookings/${id}/check-out`);
-            getAllBookings();
-        } catch (error) {
-            console.error("Error checking out:", error);
-        }
-    };
+  const getAllBookings = async () => {
+    try {
+      const res = await callApi({
+        instance: publicApi,
+        method: "get",
+        url: "/bookings",
+      });
+      setBookings(res.data.bookings);
+    } catch (error) {
+      console.error("Error fetching bookings:", error);
+    }
+  };
 
-    const handlePayment = async (id: string) => {
-        try {
-            await axios.post(`${portServer}/bookings/${id}/payment-link`);
-            handleCheckOut(id);
-        } catch (error) {
-            console.error("Error processing payment:", error);
-        }
-    };
+  useEffect(() => {
+    getAllBookings();
+  }, []);
 
-    useEffect(() => {
-        getAllBookings();
-    }, []);
+  return (
+    <Box sx={{ flexGrow: 1, p: 4 }}>
+      <Typography
+        variant="h4"
+        sx={{ fontWeight: "bold", textAlign: "center", mb: 3 }}
+      >
+        Booking Management
+      </Typography>
 
-    return (
-        <Box sx={{ flexGrow: 1, p: 3 }}>
-            <Typography variant="h4" sx={{ mb: 3, fontWeight: "bold", color: "#333" }}>Manage Patients</Typography>
-            <TableContainer component={Paper} sx={{ boxShadow: 3, borderRadius: 2, overflow: "hidden" }}>
-                <Table>
-                    <TableHead>
-                        <TableRow sx={{ backgroundColor: "#1976d2" }}>
-                            {[
-                                "ID", "Patient", "Service", "Check-in Time", "Check-out Time", "Therapist", "Status", "Actions"
-                            ].map((header) => (
-                                <TableCell key={header} sx={{ color: "#fff", fontWeight: "bold" }}>{header}</TableCell>
-                            ))}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {bookings.map((b) => (
-                            <TableRow key={b._id} sx={{ '&:nth-of-type(odd)': { backgroundColor: "#f9f9f9" } }}>
-                                <TableCell>{b._id}</TableCell>
-                                <TableCell>
-                                    <Box display="flex" alignItems="center" gap={1}>
-                                        <Avatar src={b.therapist.imageUrl} />
-                                        <Typography fontWeight="bold">{b.booking.patientName}</Typography>
-                                    </Box>
-                                </TableCell>
-                                <TableCell>{b.service.name}</TableCell>
-                                <TableCell>{b.booking.checkinTime}</TableCell>
-                                <TableCell>{b.booking.checkoutTime || "N/A"}</TableCell>
-                                <TableCell>{b.therapist.fullName}</TableCell>
-                                <TableCell>
-                                    <Typography
-                                        sx={{
-                                            color: b.bookingStatus === "Completed" ? "green" : "orange",
-                                            fontWeight: "bold",
-                                        }}
-                                    >
-                                        {b.bookingStatus}
-                                    </Typography>
-                                </TableCell>
-                                <TableCell>
-                                    <Tooltip title="Edit">
-                                        <IconButton color="primary">
-                                            <Edit />
-                                        </IconButton>
-                                    </Tooltip>
-                                    <Tooltip title="Delete">
-                                        <IconButton color="error">
-                                            <Delete />
-                                        </IconButton>
-                                    </Tooltip>
-                                    <Tooltip title="Pay & Checkout">
-                                        <Button
-                                            variant="contained"
-                                            color="success"
-                                            sx={{ ml: 1, textTransform: "none" }}
-                                            startIcon={<Payment />}
-                                            onClick={() => handlePayment(b._id)}
-                                        >
-                                            Pay & Checkout
-                                        </Button>
-                                    </Tooltip>
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </Box>
-    );
+      <TableContainer component={Paper} sx={{ boxShadow: 3, borderRadius: 2 }}>
+        <Table>
+          <TableHead>
+            <TableRow sx={{ backgroundColor: "#1976d2" }}>
+              {[
+                "Service",
+                "Therapist",
+                "Appointment Time",
+                "Start Time",
+                "End Time",
+                "Total Fee",
+                "Status",
+                "Actions",
+              ].map((header) => (
+                <TableCell
+                  key={header}
+                  sx={{
+                    color: "#fff",
+                    fontWeight: "bold",
+                    textAlign: "center",
+                  }}
+                >
+                  {header}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {bookings.map((b) => (
+              <TableRow key={b.booking._id}>
+                <TableCell sx={{ textAlign: "center" }}>
+                  {b.service.name}
+                </TableCell>
+                <TableCell sx={{ textAlign: "center" }}>
+                  <Box
+                    display="flex"
+                    alignItems="start"
+                    justifyContent="start"
+                    gap={1}
+                  >
+                    <Avatar
+                      src={b.therapist?.imageUrl}
+                      sx={{ width: 40, height: 40 }}
+                    />
+                    <Typography>{b.therapist?.fullName}</Typography>
+                  </Box>
+                </TableCell>
+                <TableCell sx={{ textAlign: "center" }}>
+                  {new Date(b.booking.appointmentTime).toLocaleString()}
+                </TableCell>
+                <TableCell sx={{ textAlign: "center" }}>
+                  {new Date(b.booking.startTime).toLocaleString()}
+                </TableCell>
+                <TableCell sx={{ textAlign: "center" }}>
+                  {new Date(b.booking.endTime).toLocaleString()}
+                </TableCell>
+                <TableCell sx={{ textAlign: "center" }}>
+                  ${b.booking.totalFee.toFixed(2)}
+                </TableCell>
+                <TableCell sx={{ textAlign: "center" }}>
+                  <Typography
+                    sx={{
+                      fontWeight: "bold",
+                      color:
+                        b.bookingStatus.name === "Completed"
+                          ? "green"
+                          : "orange",
+                    }}
+                  >
+                    {b.bookingStatus.name}
+                  </Typography>
+                </TableCell>
+                <TableCell sx={{ textAlign: "center" }}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    sx={{ textTransform: "none" }}
+                    onClick={() => handleOpenPopup(b)}
+                  >
+                    Details
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+            <BookingDetailPopup
+              open={openPopup}
+              handleClose={() => setOpenPopup(false)}
+              booking={selectedBooking}
+            />
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
+  );
 };
 
 export default BookingList;

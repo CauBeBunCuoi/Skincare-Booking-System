@@ -1,4 +1,3 @@
-// Lấy token từ localStorage
 const getAuthTokenFromPersistLocalStorage = (): string | null => {
   try {
     const persistedState = JSON.parse(localStorage.getItem("persist:root"));
